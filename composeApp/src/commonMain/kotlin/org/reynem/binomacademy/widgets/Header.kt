@@ -1,7 +1,6 @@
 package org.reynem.binomacademy.widgets
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,7 +26,10 @@ fun AppHeader(){
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(text = "Hello")
-            LinearProgressIndicator(progress = { 0.1f })
+            LinearProgressIndicator(
+                modifier = Modifier.padding(top = 8.dp),
+                progress = { 0.1f }
+            )
         }
         Spacer(
             modifier = Modifier

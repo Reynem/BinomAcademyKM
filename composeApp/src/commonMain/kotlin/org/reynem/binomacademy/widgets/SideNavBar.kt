@@ -1,0 +1,25 @@
+package org.reynem.binomacademy.widgets
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+
+@Composable
+fun SideNavBar(){
+    Card (
+        modifier = Modifier
+            .padding(vertical = 12.dp, horizontal = 8.dp)
+            .fillMaxHeight()
+            .fillMaxWidth(fraction = 0.15f)
+    ){
+        Column {
+            Text("BANNER")
+        }
+    }
+}
