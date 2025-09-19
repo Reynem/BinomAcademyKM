@@ -22,7 +22,7 @@ fun AppHeader(){
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = MaterialTheme.colorScheme.primaryContainer)
-                .padding(all = 8.dp),
+                .padding(all = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(text = "Hello")
