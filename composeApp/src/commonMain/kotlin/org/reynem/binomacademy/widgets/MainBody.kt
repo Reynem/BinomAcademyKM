@@ -1,5 +1,6 @@
 package org.reynem.binomacademy.widgets
 
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -7,7 +8,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +24,7 @@ fun MainBody(topics: TopicRepository){
         modifier = Modifier
             .padding(vertical = 12.dp, horizontal = 8.dp)
             .fillMaxSize(),
-        colors = CardColors(
+        colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background,
             contentColor = MaterialTheme.colorScheme.onBackground,
             disabledContainerColor = MaterialTheme.colorScheme.surface,
@@ -37,15 +38,22 @@ fun MainBody(topics: TopicRepository){
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
 
-
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(8.dp)
-        ) {
-            items(topics.getAll()) {
-                topic ->
-                TopicCard(topic)
+        @Suppress("COMPOSE_APPLIER_CALL_MISMATCH")
+        BoxWithConstraints {
+            var countOfColumns = 1
+            if (maxWidth > 900.dp) {
+                countOfColumns = 3
+            } else if (maxWidth > 500.dp) {
+                countOfColumns = 2
+            }
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(countOfColumns),
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(8.dp)
+            ) {
+                items(topics.getAll()) { topic ->
+                    TopicCard(topic)
+                }
             }
         }
     }
