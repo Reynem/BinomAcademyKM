@@ -15,26 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.reynem.binomacademy.data.Lesson
-import org.reynem.binomacademy.data.Topic
+import org.reynem.binomacademy.data.TopicRepository
 
 @Composable
-fun MainBody(){
-    val topic1 = Topic(
-        id = 1,
-        title = "Lesson",
-        lessons = listOf(Lesson(topicId = 1, id = 1, title = "Morty", units = listOf()))
-    )
-    val topic2 = Topic(
-        id = 2,
-        title = "Lesson 2",
-        lessons = listOf(Lesson(topicId = 1, id = 1, title = "Morty", units = listOf()))
-    )
-    val topic3 = Topic(
-        id = 3,
-        title = "Lesson 3",
-        lessons = listOf(Lesson(topicId = 1, id = 1, title = "Morty", units = listOf()))
-    )
+fun MainBody(topics: TopicRepository){
     Card (
         modifier = Modifier
             .padding(vertical = 12.dp, horizontal = 8.dp)
@@ -52,12 +36,14 @@ fun MainBody(){
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
+
+
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(8.dp)
         ) {
-            items(listOf(topic1,topic2,topic3)) {
+            items(topics.getAll()) {
                 topic ->
                 TopicCard(topic)
             }
