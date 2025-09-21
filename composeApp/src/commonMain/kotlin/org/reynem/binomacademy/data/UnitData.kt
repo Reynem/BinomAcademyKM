@@ -1,8 +1,10 @@
 package org.reynem.binomacademy.data
 
+import kotlinx.serialization.Serializable
 import java.lang.Error
 
-data class Unit(
+@Serializable
+data class UnitData(
     val id: Int,
     val lessonId: Int,
     val title: String,
