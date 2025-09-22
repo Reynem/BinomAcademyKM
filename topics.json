@@ -1,0 +1,223 @@
+[
+  {
+    "id": 1,
+    "title": "Mathematics",
+    "lessons": [
+      {
+        "topicId": 1,
+        "id": 1,
+        "title": "Addition",
+        "units": [
+          {
+            "id": 1,
+            "lessonId": 1,
+            "title": "Basics of Addition",
+            "stories": ["2 + 2 = 4", "Adding zero leaves the number unchanged"],
+            "assignments": ["Solve 5 + 3", "Solve 10 + 0"],
+            "isCompleted": false,
+            "totalAttempts": 0,
+            "completedAssignments": []
+          },
+          {
+            "id": 2,
+            "lessonId": 1,
+            "title": "Addition with Carry",
+            "stories": ["When sum > 9, carry to the next digit"],
+            "assignments": ["Solve 27 + 18", "Solve 46 + 59"],
+            "isCompleted": false,
+            "totalAttempts": 0,
+            "completedAssignments": []
+          }
+        ]
+      },
+      {
+        "topicId": 1,
+        "id": 2,
+        "title": "Subtraction",
+        "units": [
+          {
+            "id": 1,
+            "lessonId": 2,
+            "title": "Basics of Subtraction",
+            "stories": ["5 - 2 = 3", "Subtracting zero leaves the number unchanged"],
+            "assignments": ["Solve 9 - 4", "Solve 15 - 0"],
+            "isCompleted": false,
+            "totalAttempts": 0,
+            "completedAssignments": []
+          }
+        ]
+      },
+      {
+        "topicId": 1,
+        "id": 3,
+        "title": "Multiplication",
+        "units": [
+          {
+            "id": 1,
+            "lessonId": 3,
+            "title": "Multiplication as Repeated Addition",
+            "stories": ["3 × 4 is the same as 3 + 3 + 3 + 3"],
+            "assignments": ["Solve 3 × 7", "Solve 5 × 5"],
+            "isCompleted": false,
+            "totalAttempts": 0,
+            "completedAssignments": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Physics",
+    "lessons": [
+      {
+        "topicId": 2,
+        "id": 1,
+        "title": "Mechanics",
+        "units": [
+          {
+            "id": 1,
+            "lessonId": 1,
+            "title": "Newton's First Law",
+            "stories": ["A body in motion stays in motion unless acted upon"],
+            "assignments": ["Explain inertia in your own words"],
+            "isCompleted": false,
+            "totalAttempts": 0,
+            "completedAssignments": []
+          }
+        ]
+      },
+      {
+        "topicId": 2,
+        "id": 2,
+        "title": "Optics",
+        "units": [
+          {
+            "id": 1,
+            "lessonId": 2,
+            "title": "Reflection of Light",
+            "stories": ["Angle of incidence = angle of reflection"],
+            "assignments": ["Draw a ray diagram for reflection"],
+            "isCompleted": false,
+            "totalAttempts": 0,
+            "completedAssignments": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Computer Science",
+    "lessons": [
+      {
+        "topicId": 3,
+        "id": 1,
+        "title": "Programming beginning",
+        "units": [
+          {
+            "id": 1,
+            "lessonId": 1,
+            "title": "Hello, World!",
+            "stories": ["The simplest program prints 'Hello, World!'"],
+            "assignments": ["Write a Hello World program in Kotlin"],
+            "isCompleted": false,
+            "totalAttempts": 0,
+            "completedAssignments": []
+          }
+        ]
+      },
+      {
+        "topicId": 3,
+        "id": 2,
+        "title": "Data Structures",
+        "units": [
+          {
+            "id": 1,
+            "lessonId": 2,
+            "title": "Arrays",
+            "stories": ["An array stores elements of the same type in a fixed size"],
+            "assignments": ["Create an array of 5 integers and sum them"],
+            "isCompleted": false,
+            "totalAttempts": 0,
+            "completedAssignments": []
+          }
+        ]
+      },
+      {
+        "topicId": 3,
+        "id": 3,
+        "title": "Algorithms",
+        "units": [
+          {
+            "id": 1,
+            "lessonId": 3,
+            "title": "Sorting",
+            "stories": ["Sorting arranges data in ascending or descending order"],
+            "assignments": ["Implement bubble sort"],
+            "isCompleted": false,
+            "totalAttempts": 0,
+            "completedAssignments": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "History",
+    "lessons": [
+      {
+        "topicId": 4,
+        "id": 1,
+        "title": "Ancient Civilizations",
+        "units": [
+          {
+            "id": 1,
+            "lessonId": 1,
+            "title": "Mesopotamia",
+            "stories": ["First known civilization with writing and laws"],
+            "assignments": ["Name two Mesopotamian inventions"],
+            "isCompleted": false,
+            "totalAttempts": 0,
+            "completedAssignments": []
+          }
+        ]
+      },
+      {
+        "topicId": 4,
+        "id": 2,
+        "title": "Middle Ages",
+        "units": [
+          {
+            "id": 1,
+            "lessonId": 2,
+            "title": "Feudalism",
+            "stories": ["System based on land ownership and vassalage"],
+            "assignments": ["Describe role of a knight"],
+            "isCompleted": false,
+            "totalAttempts": 0,
+            "completedAssignments": []
+          }
+        ]
+      },
+      {
+        "topicId": 4,
+        "id": 3,
+        "title": "Modern History",
+        "units": [
+          {
+            "id": 1,
+            "lessonId": 3,
+            "title": "Industrial Revolution",
+            "stories": ["Mass production, steam engines, urbanization"],
+            "assignments": ["List 3 inventions of Industrial Revolution"],
+            "isCompleted": false,
+            "totalAttempts": 0,
+            "completedAssignments": []
+          }
+        ]
+      }
+    ]
+  }
+]
