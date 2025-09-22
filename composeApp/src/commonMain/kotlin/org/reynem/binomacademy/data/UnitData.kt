@@ -12,7 +12,7 @@ data class UnitData(
     val assignments: List<String>,
     var isCompleted: Boolean,
     var totalAttempts: Int,
-    val completedAssignments: List<String>
+    var completedAssignments: List<String>
 ) {
     fun completeAssignment(id: Int, lessonId: Int, assignment: String): Error? {
         if (this.id == id && this.lessonId == lessonId) {

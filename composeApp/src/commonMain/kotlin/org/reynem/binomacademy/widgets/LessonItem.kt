@@ -1,6 +1,7 @@
 package org.reynem.binomacademy.widgets
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,6 +34,12 @@ fun LessonItem(text: String, lessonId: Int) {
             Text(text)
             Button(
                 onClick = {},
+                contentPadding = PaddingValues(
+                    start = 20.dp,
+                    top = 2.dp,
+                    end = 20.dp,
+                    bottom = 2.dp,
+                )
             ) {
                 Text("Start")
             }
