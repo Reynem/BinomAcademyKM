@@ -8,6 +8,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.reynem.binomacademy.data.TopicRepository
+import org.reynem.binomacademy.screens.AppScreens
+import org.reynem.binomacademy.screens.UnitPage
 
 import org.reynem.binomacademy.widgets.AppHeader
 import org.reynem.binomacademy.widgets.MainBody
@@ -18,14 +20,25 @@ import java.io.File
 @Preview
 fun App() {
     val topics = TopicRepository(File("topics.json"))
+    val currentPage = remember { AppScreens.MAIN_PAGE }
     MaterialTheme {
         Column(
             modifier = Modifier.fillMaxSize(),
         ) {
             AppHeader()
-            Row {
-                SideNavBar()
-                MainBody(topics)
+            when(currentPage){
+                AppScreens.MAIN_PAGE -> {
+                    Row {
+                        SideNavBar()
+                        MainBody(topics)
+                    }
+                }
+                AppScreens.UNIT_PAGE -> {
+                    Row {
+                        SideNavBar()
+                        UnitPage()
+                    }
+                }
             }
         }
     }
