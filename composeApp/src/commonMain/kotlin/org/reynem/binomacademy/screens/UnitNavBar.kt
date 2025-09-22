@@ -1,5 +1,6 @@
 package org.reynem.binomacademy.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,11 +17,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.reynem.binomacademy.LocalAppState
 import org.reynem.binomacademy.data.Lesson
+import org.reynem.binomacademy.data.TopicRepository
 
 
 @Composable
-fun UnitNavBar(lesson: Lesson, onSelect: (Int) -> Unit) {
+fun UnitNavBar(topics: TopicRepository, lesson: Lesson, onSelect: (Int) -> Unit) {
+    val appState = LocalAppState.current
     Card (
         modifier = Modifier
             .padding(vertical = 12.dp, horizontal = 8.dp)
@@ -34,6 +38,22 @@ fun UnitNavBar(lesson: Lesson, onSelect: (Int) -> Unit) {
         ),
     ){
         Column {
+            Card (
+                modifier = Modifier.clickable(
+                    onClick = {
+                        appState.backToMain()
+                    }
+                )
+            ){
+                Text(
+                    text = topics.getById(lesson.topicId)!!.title,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp)
+                )
+            }
+
             Text(
                 text = lesson.title,
                 fontSize = 24.sp,

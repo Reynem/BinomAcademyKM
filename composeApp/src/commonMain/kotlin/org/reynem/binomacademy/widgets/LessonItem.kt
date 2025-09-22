@@ -14,9 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.reynem.binomacademy.LocalAppState
+import org.reynem.binomacademy.data.Lesson
 
 @Composable
-fun LessonItem(text: String, lessonId: Int) {
+fun LessonItem(lesson: Lesson) {
+    val appState = LocalAppState.current
     Card (
         modifier = Modifier.fillMaxWidth().padding(8.dp),
         colors = CardColors(
@@ -31,9 +34,9 @@ fun LessonItem(text: String, lessonId: Int) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ){
-            Text(text)
+            Text(lesson.title)
             Button(
-                onClick = {},
+                onClick = { appState.navigateToLesson(lesson = lesson) },
                 contentPadding = PaddingValues(
                     start = 20.dp,
                     top = 2.dp,

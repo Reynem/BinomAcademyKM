@@ -25,7 +25,7 @@ fun TopicCard(topic: Topic) {
         Column (
             verticalArrangement = Arrangement.Top
         ){
-            topic.lessons.forEach { lesson -> LessonItem(text = lesson.title, lessonId = lesson.id) }
+            topic.lessons.forEach { lesson -> LessonItem(lesson = lesson) }
         }
     }
 }
