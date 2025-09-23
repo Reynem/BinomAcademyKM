@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +21,8 @@ import androidx.compose.ui.unit.sp
 import org.reynem.binomacademy.LocalAppState
 import org.reynem.binomacademy.data.Lesson
 import org.reynem.binomacademy.data.TopicRepository
+import org.reynem.binomacademy.theme.onSecondaryContainerLight
+import org.reynem.binomacademy.theme.secondaryContainerLight
 
 
 @Composable
@@ -39,6 +42,10 @@ fun UnitNavBar(topics: TopicRepository, lesson: Lesson, onSelect: (Int) -> Unit)
     ){
         Column {
             Card (
+                colors = CardDefaults.cardColors(
+                    containerColor = secondaryContainerLight,
+                    contentColor = onSecondaryContainerLight
+                ),
                 modifier = Modifier.clickable(
                     onClick = {
                         appState.backToMain()
