@@ -11,6 +11,7 @@ import org.reynem.binomacademy.data.TopicRepository
 import org.reynem.binomacademy.screens.AppScreens
 import org.reynem.binomacademy.screens.UnitNavBar
 import org.reynem.binomacademy.screens.UnitPage
+import org.reynem.binomacademy.theme.AppTheme
 
 import org.reynem.binomacademy.widgets.AppHeader
 import org.reynem.binomacademy.widgets.MainBody
@@ -24,7 +25,9 @@ fun App() {
     val appState = remember { AppState() }
 
     CompositionLocalProvider(LocalAppState provides appState) {
-        MaterialTheme {
+        AppTheme (
+            darkTheme = false
+        ){
             Column(Modifier.fillMaxSize()) {
                 AppHeader()
                 when (appState.currentPage) {
