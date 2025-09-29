@@ -1,11 +1,13 @@
 package org.reynem.binomacademy.data
 
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.io.File
 
 class TopicRepository (private val storageFile: File) {
-    private val json = Json { prettyPrint = true }
+    private val json = Json {
+        prettyPrint = true
+        classDiscriminator = "type"
+    }
     private var topics: MutableList<Topic> = mutableListOf()
 
     init {

@@ -13,7 +13,20 @@
             "lessonId": 1,
             "title": "Basics of Addition",
             "stories": ["2 + 2 = 4", "Adding zero leaves the number unchanged"],
-            "assignments": ["Solve 5 + 3", "Solve 10 + 0"],
+            "assignments": [
+              {
+                "type": "number_input",
+                "id": "add_5_3",
+                "title": "Solve: 5 + 3",
+                "correctAnswer": 8
+              },
+              {
+                "type": "number_input",
+                "id": "add_10_0",
+                "title": "Solve: 10 + 0",
+                "correctAnswer": 10
+              }
+            ],
             "isCompleted": false,
             "totalAttempts": 0,
             "completedAssignments": []
@@ -23,7 +36,21 @@
             "lessonId": 1,
             "title": "Addition with Carry",
             "stories": ["When sum > 9, carry to the next digit"],
-            "assignments": ["Solve 27 + 18", "Solve 46 + 59"],
+            "assignments": [
+              {
+                "type": "number_input",
+                "id": "add_27_18",
+                "title": "Solve: 27 + 18",
+                "correctAnswer": 45
+              },
+              {
+                "type": "multiple_choice",
+                "id": "add_46_59_mc",
+                "title": "What is 46 + 59?",
+                "options": ["95", "105", "115", "125"],
+                "correctAnswer": "105"
+              }
+            ],
             "isCompleted": false,
             "totalAttempts": 0,
             "completedAssignments": []
@@ -40,7 +67,20 @@
             "lessonId": 2,
             "title": "Basics of Subtraction",
             "stories": ["5 - 2 = 3", "Subtracting zero leaves the number unchanged"],
-            "assignments": ["Solve 9 - 4", "Solve 15 - 0"],
+            "assignments": [
+              {
+                "type": "number_input",
+                "id": "sub_9_4",
+                "title": "Solve: 9 - 4",
+                "correctAnswer": 5
+              },
+              {
+                "type": "true_false",
+                "id": "sub_zero",
+                "title": "Subtracting zero from a number changes its value.",
+                "correctAnswer": false
+              }
+            ],
             "isCompleted": false,
             "totalAttempts": 0,
             "completedAssignments": []
@@ -57,7 +97,21 @@
             "lessonId": 3,
             "title": "Multiplication as Repeated Addition",
             "stories": ["3 × 4 is the same as 3 + 3 + 3 + 3"],
-            "assignments": ["Solve 3 × 7", "Solve 5 × 5"],
+            "assignments": [
+              {
+                "type": "number_input",
+                "id": "mult_3_7",
+                "title": "Solve: 3 × 7",
+                "correctAnswer": 21
+              },
+              {
+                "type": "multiple_choice",
+                "id": "mult_5_5_mc",
+                "title": "What is 5 × 5?",
+                "options": ["20", "25", "30", "35"],
+                "correctAnswer": "25"
+              }
+            ],
             "isCompleted": false,
             "totalAttempts": 0,
             "completedAssignments": []
@@ -80,7 +134,14 @@
             "lessonId": 1,
             "title": "Newton's First Law",
             "stories": ["A body in motion stays in motion unless acted upon"],
-            "assignments": ["Explain inertia in your own words"],
+            "assignments": [
+              {
+                "type": "text_input",
+                "id": "explain_inertia",
+                "title": "Explain inertia in your own words",
+                "correctAnswer": "Inertia is the tendency of an object to resist changes in its state of motion."
+              }
+            ],
             "isCompleted": false,
             "totalAttempts": 0,
             "completedAssignments": []
@@ -97,7 +158,14 @@
             "lessonId": 2,
             "title": "Reflection of Light",
             "stories": ["Angle of incidence = angle of reflection"],
-            "assignments": ["Draw a ray diagram for reflection"],
+            "assignments": [
+              {
+                "type": "true_false",
+                "id": "reflection_law",
+                "title": "The angle of incidence is always equal to the angle of reflection.",
+                "correctAnswer": true
+              }
+            ],
             "isCompleted": false,
             "totalAttempts": 0,
             "completedAssignments": []
@@ -120,7 +188,14 @@
             "lessonId": 1,
             "title": "Hello, World!",
             "stories": ["The simplest program prints 'Hello, World!'"],
-            "assignments": ["Write a Hello World program in Kotlin"],
+            "assignments": [
+              {
+                "type": "text_input",
+                "id": "hello_world_kotlin",
+                "title": "Write a Hello World program in Kotlin",
+                "correctAnswer": "fun main() { println(\"Hello, World!\") }"
+              }
+            ],
             "isCompleted": false,
             "totalAttempts": 0,
             "completedAssignments": []
@@ -137,7 +212,14 @@
             "lessonId": 2,
             "title": "Arrays",
             "stories": ["An array stores elements of the same type in a fixed size"],
-            "assignments": ["Create an array of 5 integers and sum them"],
+            "assignments": [
+              {
+                "type": "text_input",
+                "id": "array_sum",
+                "title": "Create an array of 5 integers and sum them (write code)",
+                "correctAnswer": "val arr = intArrayOf(1, 2, 3, 4, 5); val sum = arr.sum()"
+              }
+            ],
             "isCompleted": false,
             "totalAttempts": 0,
             "completedAssignments": []
@@ -154,7 +236,14 @@
             "lessonId": 3,
             "title": "Sorting",
             "stories": ["Sorting arranges data in ascending or descending order"],
-            "assignments": ["Implement bubble sort"],
+            "assignments": [
+              {
+                "type": "text_input",
+                "id": "bubble_sort",
+                "title": "Implement bubble sort in Kotlin",
+                "correctAnswer": "fun bubbleSort(arr: IntArray) { for (i in 0 until arr.size - 1) for (j in 0 until arr.size - i - 1) if (arr[j] > arr[j + 1]) arr[j] = arr[j + 1].also { arr[j + 1] = arr[j] } }"
+              }
+            ],
             "isCompleted": false,
             "totalAttempts": 0,
             "completedAssignments": []
@@ -177,7 +266,14 @@
             "lessonId": 1,
             "title": "Mesopotamia",
             "stories": ["First known civilization with writing and laws"],
-            "assignments": ["Name two Mesopotamian inventions"],
+            "assignments": [
+              {
+                "type": "text_input",
+                "id": "mesopotamia_inventions",
+                "title": "Name two Mesopotamian inventions",
+                "correctAnswer": "Writing and the wheel"
+              }
+            ],
             "isCompleted": false,
             "totalAttempts": 0,
             "completedAssignments": []
@@ -194,7 +290,14 @@
             "lessonId": 2,
             "title": "Feudalism",
             "stories": ["System based on land ownership and vassalage"],
-            "assignments": ["Describe role of a knight"],
+            "assignments": [
+              {
+                "type": "text_input",
+                "id": "knight_role",
+                "title": "Describe the role of a knight",
+                "correctAnswer": "A knight was a mounted warrior who served a lord in exchange for land and protection."
+              }
+            ],
             "isCompleted": false,
             "totalAttempts": 0,
             "completedAssignments": []
@@ -211,7 +314,15 @@
             "lessonId": 3,
             "title": "Industrial Revolution",
             "stories": ["Mass production, steam engines, urbanization"],
-            "assignments": ["List 3 inventions of Industrial Revolution"],
+            "assignments": [
+              {
+                "type": "multiple_choice",
+                "id": "industrial_inventions",
+                "title": "Which of the following was invented during the Industrial Revolution?",
+                "options": ["Steam engine", "Internet", "Smartphone", "Airplane"],
+                "correctAnswer": "Steam engine"
+              }
+            ],
             "isCompleted": false,
             "totalAttempts": 0,
             "completedAssignments": []

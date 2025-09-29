@@ -1,8 +1,6 @@
 package org.reynem.binomacademy.data
 
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.ListSerializer
 
 @Serializable
 data class UnitData(
@@ -10,7 +8,6 @@ data class UnitData(
     val lessonId: Int,
     val title: String,
     val stories: List<String>,
-    @Serializable(with = AssignmentListSerializer::class)
     val assignments: List<Assignment>,
     var isCompleted: Boolean = false,
     var totalAttempts: Int = 0,
@@ -24,6 +21,3 @@ data class UnitData(
         return false
     }
 }
-
-object AssignmentListSerializer : KSerializer<List<Assignment>> by
-ListSerializer(Assignment.serializer())
