@@ -2,18 +2,13 @@ package org.reynem.binomacademy.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -25,6 +20,7 @@ import binomacademy.composeapp.generated.resources.book_story
 import binomacademy.composeapp.generated.resources.book_tip
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.reynem.binomacademy.data.Assignment
 import org.reynem.binomacademy.data.Lesson
 import org.reynem.binomacademy.theme.backgroundDark
 
@@ -73,7 +69,7 @@ fun UnitPage(lesson: Lesson, index: Int) {
             EmptyCard("No assignments yet")
         } else {
             unit.assignments.forEach { assignment ->
-                val isCompleted = unit.completedAssignments.contains(assignment)
+                val isCompleted = unit.completedAssignments.contains(assignment.id)
                 AssignmentCard(assignment = assignment, isCompleted = isCompleted)
             }
         }
@@ -123,7 +119,7 @@ private fun ItemCard(content: String) {
 }
 
 @Composable
-private fun AssignmentCard(assignment: String, isCompleted: Boolean) {
+private fun AssignmentCard(assignment: Assignment, isCompleted: Boolean) {
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 4.dp)
@@ -134,24 +130,44 @@ private fun AssignmentCard(assignment: String, isCompleted: Boolean) {
             else MaterialTheme.colorScheme.surface
         )
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .padding(12.dp)
                 .fillMaxWidth()
         ) {
             Text(
-                text = assignment,
+                text = assignment.title,
                 fontSize = 16.sp,
                 fontWeight = if (isCompleted) FontWeight.Medium else FontWeight.Normal,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.fillMaxWidth()
             )
+
+            // Type of the task for debugging
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = when (assignment) {
+                    is Assignment.MultipleChoice -> "Multiple Choice"
+                    is Assignment.TextInput -> "Text Input"
+                    is Assignment.TrueFalse -> "True / False"
+                    is Assignment.NumberInput -> "Number Input"
+                },
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
             if (isCompleted) {
-                Text(
-                    "✓",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        "✓ Completed",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
         }
     }
