@@ -31,6 +31,7 @@ import org.reynem.binomacademy.widgets.TrueFalseView
 @Composable
 fun UnitPage(lesson: Lesson, index: Int) {
     val unit = lesson.units[index]
+    val onCompleted: (String) -> Unit = {unit.completeAssignment(it)}
 
     Card(
         modifier = Modifier
@@ -74,7 +75,7 @@ fun UnitPage(lesson: Lesson, index: Int) {
         } else {
             unit.assignments.forEach { assignment ->
                 val isCompleted = unit.completedAssignments.contains(assignment.id)
-                AssignmentCard(assignment = assignment, isCompleted = isCompleted)
+                AssignmentCard(assignment = assignment, isCompleted = isCompleted, onCompleted)
             }
         }
 
@@ -123,7 +124,11 @@ private fun ItemCard(content: String) {
 }
 
 @Composable
-private fun AssignmentCard(assignment: Assignment, isCompleted: Boolean) {
+private fun AssignmentCard(
+    assignment: Assignment,
+    isCompleted: Boolean,
+    onCompleted: (String) -> Unit
+) {
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 4.dp)
@@ -148,10 +153,10 @@ private fun AssignmentCard(assignment: Assignment, isCompleted: Boolean) {
 
             Spacer(modifier = Modifier.height(4.dp))
             when (assignment) {
-                is Assignment.MultipleChoice -> MultipleChoiceView(assignment)
-                is Assignment.TextInput -> TextInputView(assignment)
-                is Assignment.TrueFalse -> TrueFalseView(assignment)
-                is Assignment.NumberInput -> NumberInputView(assignment)
+                is Assignment.MultipleChoice -> MultipleChoiceView(assignment, onCompleted)
+                is Assignment.TextInput -> TextInputView(assignment, onCompleted)
+                is Assignment.TrueFalse -> TrueFalseView(assignment, onCompleted)
+                is Assignment.NumberInput -> NumberInputView(assignment, onCompleted)
             }
 
             if (isCompleted) {
