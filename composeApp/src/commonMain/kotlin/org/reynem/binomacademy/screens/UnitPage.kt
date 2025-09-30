@@ -23,6 +23,10 @@ import org.jetbrains.compose.resources.painterResource
 import org.reynem.binomacademy.data.Assignment
 import org.reynem.binomacademy.data.Lesson
 import org.reynem.binomacademy.theme.backgroundDark
+import org.reynem.binomacademy.widgets.MultipleChoiceView
+import org.reynem.binomacademy.widgets.NumberInputView
+import org.reynem.binomacademy.widgets.TextInputView
+import org.reynem.binomacademy.widgets.TrueFalseView
 
 @Composable
 fun UnitPage(lesson: Lesson, index: Int) {
@@ -142,18 +146,13 @@ private fun AssignmentCard(assignment: Assignment, isCompleted: Boolean) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            // Type of the task for debugging
             Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = when (assignment) {
-                    is Assignment.MultipleChoice -> "Multiple Choice"
-                    is Assignment.TextInput -> "Text Input"
-                    is Assignment.TrueFalse -> "True / False"
-                    is Assignment.NumberInput -> "Number Input"
-                },
-                fontSize = 12.sp,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            when (assignment) {
+                is Assignment.MultipleChoice -> MultipleChoiceView(assignment)
+                is Assignment.TextInput -> TextInputView(assignment)
+                is Assignment.TrueFalse -> TrueFalseView(assignment)
+                is Assignment.NumberInput -> NumberInputView(assignment)
+            }
 
             if (isCompleted) {
                 Row(
