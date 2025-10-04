@@ -13,47 +13,39 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import org.reynem.binomacademy.data.Assignment
 
-
 @Composable
-fun MultipleChoiceView(assignment: Assignment.MultipleChoice, onCompleted: (String) -> Unit) {
-    val radioOptions = assignment.options
-    val (selectedOption, onOptionSelected) = remember(assignment.id)
-    { mutableStateOf(radioOptions[0]) }
-
-    if (selectedOption == assignment.correctAnswer) {
-        onCompleted(assignment.id)
-    }
-
+fun MultipleChoiceView(
+    assignment: Assignment.MultipleChoice,
+    currentAnswer: String?,
+    onAnswerChanged: (String) -> Unit
+) {
     Column(modifier = Modifier.selectableGroup()) {
-        radioOptions.forEach { text ->
+        assignment.options.forEach { option ->
+            val isSelected = option == currentAnswer
             Row(
-                Modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)
                     .selectable(
-                        selected = (text == selectedOption),
-                        onClick = { onOptionSelected(text) },
+                        selected = isSelected,
+                        onClick = { onAnswerChanged(option) },
                         role = Role.RadioButton
                     )
                     .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = (text == selectedOption),
-                    onClick = null // null recommended for accessibility with screen readers
+                    selected = isSelected,
+                    onClick = null // recommended for accessibility
                 )
                 Text(
-                    text = text,
+                    text = option,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(start = 16.dp)
                 )
@@ -63,50 +55,47 @@ fun MultipleChoiceView(assignment: Assignment.MultipleChoice, onCompleted: (Stri
 }
 
 @Composable
-fun TextInputView(assignment: Assignment.TextInput, onCompleted: (String) -> Unit) {
-    var text by remember(assignment.id) { mutableStateOf("") }
-
+fun TextInputView(
+    assignment: Assignment.TextInput,
+    currentAnswer: String?,
+    onAnswerChanged: (String) -> Unit
+) {
     TextField(
-        value = text,
-        onValueChange = { text = it},
+        value = currentAnswer ?: "",
+        onValueChange = onAnswerChanged,
         modifier = Modifier.background(MaterialTheme.colorScheme.surface)
     )
-
-    if (text == assignment.correctAnswer) {
-        onCompleted(assignment.id)
-    }
 }
 
 @Composable
-fun TrueFalseView(assignment: Assignment.TrueFalse, onCompleted: (String) -> Unit) {
-    val radioOptions = listOf(true, false)
-    val (selectedOption, onOptionSelected) = remember(assignment.id)
-    { mutableStateOf(radioOptions[0]) }
-
-    if (selectedOption == assignment.correctAnswer) {
-        onCompleted(assignment.id)
-    }
+fun TrueFalseView(
+    assignment: Assignment.TrueFalse,
+    currentAnswer: String?,
+    onAnswerChanged: (String) -> Unit
+) {
+    val options = listOf("true" to "True", "false" to "False")
 
     Column(modifier = Modifier.selectableGroup()) {
-        radioOptions.forEach { boolOption ->
+        options.forEach { (boolValue, label) ->
+            val isSelected = boolValue == currentAnswer
             Row(
-                Modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)
                     .selectable(
-                        selected = (boolOption == selectedOption),
-                        onClick = { onOptionSelected(boolOption) },
+                        selected = isSelected,
+                        onClick = { onAnswerChanged(boolValue) },
                         role = Role.RadioButton
                     )
                     .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = (boolOption == selectedOption),
-                    onClick = null // null recommended for accessibility with screen readers
+                    selected = isSelected,
+                    onClick = null
                 )
                 Text(
-                    text = boolOption.toString(),
+                    text = label,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(start = 16.dp)
                 )
@@ -116,16 +105,15 @@ fun TrueFalseView(assignment: Assignment.TrueFalse, onCompleted: (String) -> Uni
 }
 
 @Composable
-fun NumberInputView(assignment: Assignment.NumberInput, onCompleted: (String) -> Unit) {
-    var text by remember(assignment.id) { mutableStateOf("") }
-
+fun NumberInputView(
+    assignment: Assignment.NumberInput,
+    currentAnswer: String?,
+    onAnswerChanged: (String) -> Unit
+) {
     TextField(
-        value = text,
-        onValueChange = { text = it},
-        modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+        value = currentAnswer ?: "",
+        onValueChange = onAnswerChanged,
+        modifier = Modifier.background(MaterialTheme.colorScheme.surface),
+        singleLine = true,
     )
-
-    if (text == assignment.correctAnswer.toString()) {
-        onCompleted(assignment.id)
-    }
 }

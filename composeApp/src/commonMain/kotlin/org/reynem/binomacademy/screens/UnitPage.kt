@@ -99,12 +99,13 @@ fun UnitPage(
         }
 
         Button(
-            onClick = { assignmentViewModel.checkAssignments(unit.assignments) },
+            onClick = {
+                assignmentViewModel.checkAssignments(unit.assignments) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
         ) {
-            Text("Проверить ответы")
+            Text("Check answers")
         }
 
         // TIPS
@@ -182,10 +183,10 @@ private fun AssignmentCard(
 
             Spacer(modifier = Modifier.height(4.dp))
             when (assignment) {
-                is Assignment.MultipleChoice -> MultipleChoiceView(assignment, onAnswerChanged)
-                is Assignment.TextInput -> TextInputView(assignment, onAnswerChanged)
-                is Assignment.TrueFalse -> TrueFalseView(assignment, onAnswerChanged)
-                is Assignment.NumberInput -> NumberInputView(assignment, onAnswerChanged)
+                is Assignment.MultipleChoice -> MultipleChoiceView(assignment, currentAnswer as String?, onAnswerChanged)
+                is Assignment.TextInput -> TextInputView(assignment, currentAnswer as String?, onAnswerChanged)
+                is Assignment.TrueFalse -> TrueFalseView(assignment, currentAnswer as String?, onAnswerChanged)
+                is Assignment.NumberInput -> NumberInputView(assignment, currentAnswer as String?, onAnswerChanged)
             }
 
             if (isCompleted) {

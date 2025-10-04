@@ -3,6 +3,9 @@ package org.reynem.binomacademy.viewmodels
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import org.reynem.binomacademy.data.Assignment
+import org.reynem.binomacademy.utils.normalizeNumberInput
+import org.reynem.binomacademy.utils.numberFormat
+
 
 class AssignmentViewModel : ViewModel() {
     private val _userAnswers = mutableStateOf<Map<String, Any?>>(emptyMap())
@@ -21,16 +24,38 @@ class AssignmentViewModel : ViewModel() {
         val newlyCompleted = mutableSetOf<String>()
 
         for (assignment in unitAssignments) {
-            val userAnswer = _userAnswers.value[assignment.id]
-            val isCorrect = when (assignment) {
-                is Assignment.MultipleChoice -> userAnswer == assignment.correctAnswer
-                is Assignment.TextInput -> userAnswer == assignment.correctAnswer
-                is Assignment.TrueFalse -> userAnswer == assignment.correctAnswer
-                is Assignment.NumberInput -> userAnswer == assignment.correctAnswer.toString()
-            }
+            when (assignment) {
+                is Assignment.NumberInput -> {
+                    val rawUserInput = _userAnswers.value[assignment.id] as? String ?: continue
+                    val normalizedUserInput = normalizeNumberInput(rawUserInput) ?: continue
 
-            if (isCorrect) {
-                newlyCompleted.add(assignment.id)
+                    val normalizedCorrect = numberFormat.format(assignment.correctAnswer)
+
+                    if (normalizedUserInput == normalizedCorrect) {
+                        newlyCompleted.add(assignment.id)
+                    }
+                }
+
+                is Assignment.MultipleChoice -> {
+                    val userAnswer = _userAnswers.value[assignment.id] as? String ?: continue
+                    if (userAnswer == assignment.correctAnswer) {
+                        newlyCompleted.add(assignment.id)
+                    }
+                }
+
+                is Assignment.TextInput -> {
+                    val userAnswer = _userAnswers.value[assignment.id] as? String ?: continue
+                    if (userAnswer == assignment.correctAnswer) {
+                        newlyCompleted.add(assignment.id)
+                    }
+                }
+
+                is Assignment.TrueFalse -> {
+                    val userAnswer = _userAnswers.value[assignment.id] as? String ?: continue
+                    if (userAnswer == assignment.correctAnswer.toString()) {
+                        newlyCompleted.add(assignment.id)
+                    }
+                }
             }
         }
 
