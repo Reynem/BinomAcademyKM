@@ -3,17 +3,20 @@ package org.reynem.binomacademy.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import binomacademy.composeapp.generated.resources.Res
 import binomacademy.composeapp.generated.resources.book_assignment
 import binomacademy.composeapp.generated.resources.book_story
@@ -23,15 +26,22 @@ import org.jetbrains.compose.resources.painterResource
 import org.reynem.binomacademy.data.Assignment
 import org.reynem.binomacademy.data.Lesson
 import org.reynem.binomacademy.theme.backgroundDark
+import org.reynem.binomacademy.viewmodels.AssignmentViewModel
 import org.reynem.binomacademy.widgets.MultipleChoiceView
 import org.reynem.binomacademy.widgets.NumberInputView
 import org.reynem.binomacademy.widgets.TextInputView
 import org.reynem.binomacademy.widgets.TrueFalseView
 
 @Composable
-fun UnitPage(lesson: Lesson, index: Int) {
+fun UnitPage(
+    lesson: Lesson,
+    index: Int,
+    assignmentViewModel: AssignmentViewModel = viewModel(key = lesson.id.toString())
+) {
     val unit = lesson.units[index]
-    val onCompleted: (String) -> Unit = {unit.completeAssignment(it)}
+
+    val userAnswers by assignmentViewModel.userAnswers
+    val completedAnswers by assignmentViewModel.completedAssignments
 
     Card(
         modifier = Modifier
@@ -74,9 +84,27 @@ fun UnitPage(lesson: Lesson, index: Int) {
             EmptyCard("No assignments yet")
         } else {
             unit.assignments.forEach { assignment ->
-                val isCompleted = unit.completedAssignments.contains(assignment.id)
-                AssignmentCard(assignment = assignment, isCompleted = isCompleted, onCompleted)
+                val isCompleted = assignment.id in completedAnswers
+                val currentAnswer = userAnswers[assignment.id]
+
+                AssignmentCard(
+                    assignment = assignment,
+                    isCompleted = isCompleted,
+                    currentAnswer = currentAnswer,
+                    onAnswerChanged = { answer ->
+                        assignmentViewModel.updateAnswer(assignment.id, answer)
+                    }
+                )
             }
+        }
+
+        Button(
+            onClick = { assignmentViewModel.checkAssignments(unit.assignments) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        ) {
+            Text("Проверить ответы")
         }
 
         // TIPS
@@ -127,7 +155,8 @@ private fun ItemCard(content: String) {
 private fun AssignmentCard(
     assignment: Assignment,
     isCompleted: Boolean,
-    onCompleted: (String) -> Unit
+    currentAnswer: Any?,
+    onAnswerChanged: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -153,10 +182,10 @@ private fun AssignmentCard(
 
             Spacer(modifier = Modifier.height(4.dp))
             when (assignment) {
-                is Assignment.MultipleChoice -> MultipleChoiceView(assignment, onCompleted)
-                is Assignment.TextInput -> TextInputView(assignment, onCompleted)
-                is Assignment.TrueFalse -> TrueFalseView(assignment, onCompleted)
-                is Assignment.NumberInput -> NumberInputView(assignment, onCompleted)
+                is Assignment.MultipleChoice -> MultipleChoiceView(assignment, onAnswerChanged)
+                is Assignment.TextInput -> TextInputView(assignment, onAnswerChanged)
+                is Assignment.TrueFalse -> TrueFalseView(assignment, onAnswerChanged)
+                is Assignment.NumberInput -> NumberInputView(assignment, onAnswerChanged)
             }
 
             if (isCompleted) {
