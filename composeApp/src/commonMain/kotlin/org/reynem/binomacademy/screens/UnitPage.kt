@@ -184,9 +184,9 @@ private fun AssignmentCard(
             Spacer(modifier = Modifier.height(4.dp))
             when (assignment) {
                 is Assignment.MultipleChoice -> MultipleChoiceView(assignment, currentAnswer as String?, onAnswerChanged)
-                is Assignment.TextInput -> TextInputView(assignment, currentAnswer as String?, onAnswerChanged)
+                is Assignment.TextInput -> TextInputView(assignment, isCompleted, currentAnswer as String?, onAnswerChanged)
                 is Assignment.TrueFalse -> TrueFalseView(assignment, currentAnswer as String?, onAnswerChanged)
-                is Assignment.NumberInput -> NumberInputView(assignment, currentAnswer as String?, onAnswerChanged)
+                is Assignment.NumberInput -> NumberInputView(assignment, isCompleted, currentAnswer as String?, onAnswerChanged)
             }
 
             if (isCompleted) {

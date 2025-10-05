@@ -8,14 +8,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import org.reynem.binomacademy.data.Assignment
 
@@ -57,13 +60,19 @@ fun MultipleChoiceView(
 @Composable
 fun TextInputView(
     assignment: Assignment.TextInput,
+    isCompleted: Boolean,
     currentAnswer: String?,
     onAnswerChanged: (String) -> Unit
 ) {
-    TextField(
+    OutlinedTextField(
         value = currentAnswer ?: "",
         onValueChange = onAnswerChanged,
-        modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+        readOnly = isCompleted,
+        textStyle = TextStyle(
+            color =  if (isCompleted) MaterialTheme.colorScheme.secondary
+                    else MaterialTheme.colorScheme.onBackground
+        ),
+        modifier = Modifier.background(MaterialTheme.colorScheme.background)
     )
 }
 
@@ -107,13 +116,20 @@ fun TrueFalseView(
 @Composable
 fun NumberInputView(
     assignment: Assignment.NumberInput,
+    isCompleted: Boolean,
     currentAnswer: String?,
     onAnswerChanged: (String) -> Unit
 ) {
-    TextField(
+    OutlinedTextField(
         value = currentAnswer ?: "",
         onValueChange = onAnswerChanged,
-        modifier = Modifier.background(MaterialTheme.colorScheme.surface),
+        readOnly = isCompleted,
+        textStyle = TextStyle(
+            color =  if (isCompleted) MaterialTheme.colorScheme.secondary
+            else MaterialTheme.colorScheme.onBackground
+        ),
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
     )
 }
