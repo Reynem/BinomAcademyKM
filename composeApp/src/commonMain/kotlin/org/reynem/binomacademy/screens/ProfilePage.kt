@@ -22,7 +22,7 @@ import org.reynem.binomacademy.file_manager.LocalProfileManager
 @Composable
 fun ProfilePage() {
     val profileManager = LocalProfileManager.current
-    val user = profileManager.readUser()
+    val user = profileManager.user.value
     var tempName by remember { mutableStateOf(user.name)}
     Card (
         modifier = Modifier
@@ -46,7 +46,7 @@ fun ProfilePage() {
             onValueChange = { tempName = it}
         )
         Button(
-            onClick = { profileManager.writeUser(user.copy(name = tempName))}
+            onClick = { profileManager.updateUser { copy(name = tempName) } }
         ) {
             Text("Test Me!")
         }

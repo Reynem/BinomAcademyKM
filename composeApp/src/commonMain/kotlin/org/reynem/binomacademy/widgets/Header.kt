@@ -12,17 +12,14 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.reynem.binomacademy.file_manager.LocalProfileManager
 
 @Composable
 fun AppHeader(){
-    val profile = LocalProfileManager.current
-    val profileName by remember { mutableStateOf(profile.getUserName()) }
+    val profileManager = LocalProfileManager.current
+    val profileName = profileManager.user.value.name
     Column {
         Row(
             modifier = Modifier

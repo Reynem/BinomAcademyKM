@@ -1,5 +1,7 @@
 package org.reynem.binomacademy.file_manager
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.State
 import kotlinx.serialization.json.Json
 import org.reynem.binomacademy.data.User
 import java.io.File
@@ -8,6 +10,9 @@ class ProfileManager {
     val storage = PlatformFileStorage()
     val json = Json
     val profileFilePath = "${storage.getUserDataPath()}\\profile.json"
+
+    private val _user = mutableStateOf(loadUser())
+    val user: State<User> = _user
 
     fun initialize() {
         if (!File(profileFilePath).exists()) {
@@ -22,24 +27,23 @@ class ProfileManager {
         }
     }
 
-    fun writeUser(user: User) {
-        val profileJson = json.encodeToString(user)
-        storage.writeFile(profileFilePath, profileJson)
-    }
-
-    fun readUser() : User {
-        val storageData = storage.readFile(profileFilePath)
-        return if (storageData != null) {
-            try {
-                json.decodeFromString(storageData)
-            } catch (e: Exception) {
-                println("Error while reading JSON: $e")
-                User(name = "Hello")
+    fun loadUser(): User {
+        return try {
+            val content = storage.readFile(profileFilePath)
+            if (content != null) {
+                json.decodeFromString(content)
+            } else {
+                User(name = "Anonymous", completedUnitsTotal = 0)
             }
-        } else {
-            User(name = "Hello")
+        } catch (e: Exception) {
+            println("Error while reading a Json: $e")
+            User(name = "Anonymous", completedUnitsTotal = 0)
         }
     }
 
-    fun getUserName() : String = readUser().name
+    fun updateUser(update: User.() -> User) {
+        val newUser = _user.value.update()
+        _user.value = newUser
+        storage.writeFile(profileFilePath, json.encodeToString(newUser))
+    }
 }
