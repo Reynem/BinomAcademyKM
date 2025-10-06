@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.reynem.binomacademy.data.TopicRepository
+import org.reynem.binomacademy.file_manager.LocalProfileManager
 import org.reynem.binomacademy.file_manager.ProfileManager
 import org.reynem.binomacademy.screens.AppScreens
 import org.reynem.binomacademy.screens.UnitNavBar
@@ -17,18 +18,19 @@ import org.reynem.binomacademy.widgets.AppHeader
 import org.reynem.binomacademy.widgets.MainBody
 import org.reynem.binomacademy.widgets.SideNavBar
 import java.io.File
+import kotlin.apply
 
 @Composable
 @Preview
 fun App() {
     val topics = TopicRepository(File("topics.json"))
     val appState = remember { AppState() }
+    val profileManager = remember { ProfileManager().apply { initialize() }}
 
-    val profileManager = ProfileManager()
-
-    profileManager.initialize()
-
-    CompositionLocalProvider(LocalAppState provides appState) {
+    CompositionLocalProvider(
+        LocalAppState provides appState,
+        LocalProfileManager provides profileManager
+    ) {
         AppTheme (
             darkTheme = false
         ){
