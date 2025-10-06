@@ -1,8 +1,15 @@
 package org.reynem.binomacademy
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -37,31 +44,44 @@ fun App() {
         ){
             Column(Modifier.fillMaxSize()) {
                 AppHeader()
-                when (appState.currentPage) {
-                    AppScreens.MAIN_PAGE -> {
-                        Row {
-                            SideNavBar(
-                                onSelect = { appState.changePage(it) }
-                            )
-                            MainBody(topics)
+                AnimatedContent(
+                    targetState = appState.currentPage,
+                    label = "Animated Content",
+                    transitionSpec = {
+                        fadeIn(tween(300)) togetherWith
+                                fadeOut(tween(300))
+                    },
+                    modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+                ){ targetPage ->
+                    when (targetPage) {
+                        AppScreens.MAIN_PAGE -> {
+                            Row {
+                                SideNavBar(
+                                    onSelect = { appState.changePage(it) }
+                                )
+                                MainBody(topics)
+                            }
                         }
-                    }
-                    AppScreens.PROFILE_PAGE -> {
-                        Row {
-                            SideNavBar(
-                                onSelect = { appState.changePage(it) }
-                            )
-                            ProfilePage()
+                        AppScreens.PROFILE_PAGE -> {
+                            Row {
+                                SideNavBar(
+                                    onSelect = { appState.changePage(it) }
+                                )
+                                ProfilePage()
+                            }
                         }
-                    }
-                    AppScreens.UNIT_PAGE -> {
-                        Row {
-                            UnitNavBar(
-                                topics,
-                                appState.selectedLesson!!,
-                                onSelect = { appState.selectUnit(it) }
-                            )
-                            UnitPage(appState.selectedLesson!!, appState.selectedUnitIndex)
+                        AppScreens.UNIT_PAGE -> {
+                            val lesson = appState.selectedLesson
+                            if (lesson != null) {
+                                Row {
+                                    UnitNavBar(
+                                        topics,
+                                        lesson,
+                                        onSelect = { appState.selectUnit(it) }
+                                    )
+                                    UnitPage(lesson, appState.selectedUnitIndex)
+                                }
+                            }
                         }
                     }
                 }

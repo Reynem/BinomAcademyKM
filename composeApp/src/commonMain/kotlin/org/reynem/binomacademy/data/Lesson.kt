@@ -9,5 +9,4 @@ data class Lesson(
     val title: String,
     val units: List<UnitData>
 ) {
-
 }

@@ -28,8 +28,8 @@ class AppState {
 
     fun backToMain() {
         currentPage = AppScreens.MAIN_PAGE
-        selectedLesson = null
-        selectedUnitIndex = 0
+//        selectedLesson = null
+//        selectedUnitIndex = 0
     }
 
     fun changePage(page: AppScreens) {
