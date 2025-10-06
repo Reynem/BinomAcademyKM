@@ -1,4 +1,4 @@
-package org.reynem.binomacademy.widgets
+package org.reynem.binomacademy.screens
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.reynem.binomacademy.data.TopicRepository
+import org.reynem.binomacademy.widgets.TopicCard
 
 @Composable
 fun MainBody(topics: TopicRepository){

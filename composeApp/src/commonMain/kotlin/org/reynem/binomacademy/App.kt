@@ -15,7 +15,8 @@ import org.reynem.binomacademy.screens.UnitPage
 import org.reynem.binomacademy.theme.AppTheme
 
 import org.reynem.binomacademy.widgets.AppHeader
-import org.reynem.binomacademy.widgets.MainBody
+import org.reynem.binomacademy.screens.MainBody
+import org.reynem.binomacademy.screens.ProfilePage
 import org.reynem.binomacademy.widgets.SideNavBar
 import java.io.File
 import kotlin.apply
@@ -39,8 +40,18 @@ fun App() {
                 when (appState.currentPage) {
                     AppScreens.MAIN_PAGE -> {
                         Row {
-                            SideNavBar()
+                            SideNavBar(
+                                onSelect = { appState.changePage(it) }
+                            )
                             MainBody(topics)
+                        }
+                    }
+                    AppScreens.PROFILE_PAGE -> {
+                        Row {
+                            SideNavBar(
+                                onSelect = { appState.changePage(it) }
+                            )
+                            ProfilePage()
                         }
                     }
                     AppScreens.UNIT_PAGE -> {
