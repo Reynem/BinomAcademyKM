@@ -31,5 +31,9 @@ class AppState {
         selectedLesson = null
         selectedUnitIndex = 0
     }
+
+    fun changePage(page: AppScreens) {
+        currentPage = page
+    }
 }
 

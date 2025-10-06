@@ -12,11 +12,17 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.reynem.binomacademy.file_manager.LocalProfileManager
 
 @Composable
 fun AppHeader(){
+    val profile = LocalProfileManager.current
+    val profileName by remember { mutableStateOf(profile.getUserName()) }
     Column {
         Row(
             modifier = Modifier
@@ -25,7 +31,7 @@ fun AppHeader(){
                 .padding(all = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Hello")
+            Text(text = profileName)
             LinearProgressIndicator(
                 modifier = Modifier.padding(top = 8.dp),
                 progress = { 0.1f }

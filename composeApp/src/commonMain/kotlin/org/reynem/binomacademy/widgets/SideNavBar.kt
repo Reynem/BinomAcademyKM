@@ -16,9 +16,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.reynem.binomacademy.screens.AppScreens
 
 @Composable
-fun SideNavBar(){
+fun SideNavBar(onSelect : (AppScreens) -> Unit){
     Card (
         modifier = Modifier
             .padding(vertical = 12.dp, horizontal = 8.dp)
@@ -43,7 +44,7 @@ fun SideNavBar(){
             )
 
             Button(
-                onClick = {},
+                onClick = { onSelect(AppScreens.MAIN_PAGE) },
                 shape = RoundedCornerShape(25),
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
             ) {
@@ -66,7 +67,7 @@ fun SideNavBar(){
                 Text("Progress")
             }
             Button(
-                onClick = {},
+                onClick = { onSelect(AppScreens.PROFILE_PAGE) } ,
                 shape = RoundedCornerShape(25),
                 modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
             ) {

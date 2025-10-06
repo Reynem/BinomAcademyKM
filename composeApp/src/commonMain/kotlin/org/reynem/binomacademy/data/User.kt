@@ -1,5 +1,8 @@
 package org.reynem.binomacademy.data
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class User(
     var name: String,
     var completedUnitsTotal: Int = 0,
