@@ -24,38 +24,34 @@ class AssignmentViewModel : ViewModel() {
         val newlyCompleted = mutableSetOf<String>()
 
         for (assignment in unitAssignments) {
-            when (assignment) {
+            val isCorrect = when (assignment) {
                 is Assignment.NumberInput -> {
                     val rawUserInput = _userAnswers.value[assignment.id] as? String ?: continue
                     val normalizedUserInput = normalizeNumberInput(rawUserInput) ?: continue
 
                     val normalizedCorrect = numberFormat.format(assignment.correctAnswer)
 
-                    if (normalizedUserInput == normalizedCorrect) {
-                        newlyCompleted.add(assignment.id)
-                    }
+                    normalizedUserInput == normalizedCorrect
                 }
 
                 is Assignment.MultipleChoice -> {
                     val userAnswer = _userAnswers.value[assignment.id] as? String ?: continue
-                    if (userAnswer == assignment.correctAnswer) {
-                        newlyCompleted.add(assignment.id)
-                    }
+                    userAnswer == assignment.correctAnswer
                 }
 
                 is Assignment.TextInput -> {
                     val userAnswer = _userAnswers.value[assignment.id] as? String ?: continue
-                    if (userAnswer == assignment.correctAnswer) {
-                        newlyCompleted.add(assignment.id)
-                    }
+                    userAnswer == assignment.correctAnswer
                 }
 
                 is Assignment.TrueFalse -> {
                     val userAnswer = _userAnswers.value[assignment.id] as? String ?: continue
-                    if (userAnswer == assignment.correctAnswer.toString()) {
-                        newlyCompleted.add(assignment.id)
-                    }
+                    userAnswer == assignment.correctAnswer.toString()
                 }
+            }
+
+            if (isCorrect && !_completedAssignments.value.contains(assignment.id)) {
+                newlyCompleted.add(assignment.id)
             }
         }
 
