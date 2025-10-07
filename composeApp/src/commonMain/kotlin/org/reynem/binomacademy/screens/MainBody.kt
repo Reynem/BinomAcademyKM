@@ -1,6 +1,8 @@
 package org.reynem.binomacademy.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import org.reynem.binomacademy.data.TopicRepository
 import org.reynem.binomacademy.widgets.TopicCard
 
@@ -23,7 +24,7 @@ import org.reynem.binomacademy.widgets.TopicCard
 fun MainBody(topics: TopicRepository){
     Card (
         modifier = Modifier
-            .padding(vertical = 12.dp, horizontal = 8.dp)
+            .padding(8.dp)
             .fillMaxSize(),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background,
@@ -32,28 +33,36 @@ fun MainBody(topics: TopicRepository){
             disabledContentColor = MaterialTheme.colorScheme.onSurface
         ),
     ){
-        Text(
-            text = "My topics",
-            fontSize = 36.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 24.dp, vertical = 32.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ){
+            Text(
+                text = "My Topics",
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            )
 
-        @Suppress("COMPOSE_APPLIER_CALL_MISMATCH")
-        BoxWithConstraints {
-            var countOfColumns = 1
-            if (maxWidth > 900.dp) {
-                countOfColumns = 3
-            } else if (maxWidth > 500.dp) {
-                countOfColumns = 2
-            }
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(countOfColumns),
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(8.dp)
-            ) {
-                items(topics.getAll()) { topic ->
-                    TopicCard(topic)
+            @Suppress("COMPOSE_APPLIER_CALL_MISMATCH")
+            BoxWithConstraints {
+                var countOfColumns = 1
+                if (maxWidth > 900.dp) {
+                    countOfColumns = 3
+                } else if (maxWidth > 500.dp) {
+                    countOfColumns = 2
+                }
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(countOfColumns),
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(8.dp)
+                ) {
+                    items(topics.getAll()) { topic ->
+                        TopicCard(topic)
+                    }
                 }
             }
         }

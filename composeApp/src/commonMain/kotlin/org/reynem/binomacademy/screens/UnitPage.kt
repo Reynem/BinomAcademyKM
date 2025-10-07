@@ -58,8 +58,10 @@ fun UnitPage(
     ) {
         Text(
             text = unit.title,
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            ),
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
