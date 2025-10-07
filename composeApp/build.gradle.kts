@@ -81,7 +81,7 @@ compose.desktop {
         mainClass = "org.reynem.binomacademy.MainKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
             packageName = "org.reynem.binomacademy"
             packageVersion = "1.0.0"
         }
