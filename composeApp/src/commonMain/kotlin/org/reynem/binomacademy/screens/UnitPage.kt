@@ -25,7 +25,9 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.reynem.binomacademy.data.Assignment
 import org.reynem.binomacademy.data.Lesson
+import org.reynem.binomacademy.file_manager.LocalProfileManager
 import org.reynem.binomacademy.theme.backgroundDark
+import org.reynem.binomacademy.viewmodels.AssignmentModelFactory
 import org.reynem.binomacademy.viewmodels.AssignmentViewModel
 import org.reynem.binomacademy.widgets.MultipleChoiceView
 import org.reynem.binomacademy.widgets.NumberInputView
@@ -36,7 +38,10 @@ import org.reynem.binomacademy.widgets.TrueFalseView
 fun UnitPage(
     lesson: Lesson,
     index: Int,
-    assignmentViewModel: AssignmentViewModel = viewModel(key = lesson.id.toString())
+    assignmentViewModel: AssignmentViewModel = viewModel(
+        key = lesson.id.toString(),
+        factory = AssignmentModelFactory(LocalProfileManager.current)
+    )
 ) {
     val unit = lesson.units[index]
 

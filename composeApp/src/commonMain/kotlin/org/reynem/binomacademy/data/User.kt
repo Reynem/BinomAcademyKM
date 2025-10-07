@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class User(
     var name: String,
     var completedUnitsTotal: Int = 0,
-    var completedLessons: List<String> = listOf(),
+    var completedLessons: Set<String> = setOf(),
     var achievements: List<String> = listOf()
 ) {
     fun changeUserName(name: String) {

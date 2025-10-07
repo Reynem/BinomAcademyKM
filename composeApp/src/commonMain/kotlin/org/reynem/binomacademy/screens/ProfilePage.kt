@@ -41,6 +41,12 @@ fun ProfilePage() {
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
+
+        Text(
+            text = "You currently solved: ${user.completedUnitsTotal} units",
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        )
+
         OutlinedTextField(
             value = tempName,
             onValueChange = { tempName = it}

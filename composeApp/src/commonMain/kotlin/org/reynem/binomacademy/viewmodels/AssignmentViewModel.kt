@@ -2,12 +2,16 @@ package org.reynem.binomacademy.viewmodels
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.CreationExtras
 import org.reynem.binomacademy.data.Assignment
+import org.reynem.binomacademy.file_manager.ProfileManager
 import org.reynem.binomacademy.utils.normalizeNumberInput
 import org.reynem.binomacademy.utils.numberFormat
+import kotlin.reflect.KClass
 
 
-class AssignmentViewModel : ViewModel() {
+class AssignmentViewModel(private val profileManager: ProfileManager) : ViewModel() {
     private val _userAnswers = mutableStateOf<Map<String, Any?>>(emptyMap())
     val userAnswers = _userAnswers
 
@@ -50,7 +54,13 @@ class AssignmentViewModel : ViewModel() {
                 }
             }
 
-            if (isCorrect && !_completedAssignments.value.contains(assignment.id)) {
+            if (isCorrect && !profileManager.user.value.completedLessons.contains(assignment.id)) {
+                newlyCompleted.add(assignment.id)
+                profileManager.updateUser { copy(
+                    completedUnitsTotal = this.completedUnitsTotal + 1,
+                    completedLessons = this.completedLessons + newlyCompleted
+                ) }
+            } else if (isCorrect && !_completedAssignments.value.contains(assignment.id)){
                 newlyCompleted.add(assignment.id)
             }
         }
@@ -62,3 +72,12 @@ class AssignmentViewModel : ViewModel() {
 //        _userAnswers.value = emptyMap()
 //    }
 }
+
+class AssignmentModelFactory(private val profileManager: ProfileManager) :
+    ViewModelProvider.NewInstanceFactory()
+
+    {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T =
+            AssignmentViewModel(profileManager) as T
+    }
