@@ -54,11 +54,11 @@ class AssignmentViewModel(private val profileManager: ProfileManager) : ViewMode
                 }
             }
 
-            if (isCorrect && !profileManager.user.value.completedLessons.contains(assignment.id)) {
+            if (isCorrect && !profileManager.user.value.completedUnits.contains(assignment.id)) {
                 newlyCompleted.add(assignment.id)
                 profileManager.updateUser { copy(
                     completedUnitsTotal = this.completedUnitsTotal + 1,
-                    completedLessons = this.completedLessons + newlyCompleted
+                    completedUnits = this.completedUnits + newlyCompleted
                 ) }
             } else if (isCorrect && !_completedAssignments.value.contains(assignment.id)){
                 newlyCompleted.add(assignment.id)
