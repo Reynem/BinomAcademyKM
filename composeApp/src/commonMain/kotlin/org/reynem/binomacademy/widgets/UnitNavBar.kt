@@ -1,4 +1,4 @@
-package org.reynem.binomacademy.screens
+package org.reynem.binomacademy.widgets
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
@@ -73,6 +74,18 @@ fun UnitNavBar(topics: TopicRepository, lesson: Lesson, onSelect: (Int) -> Unit)
                 Button(
                     onClick = { onSelect(index) },
                     shape = RoundedCornerShape(25),
+                    colors = ButtonColors(
+                        containerColor = if (appState.selectedUnitIndex == index)
+                            MaterialTheme.colorScheme.primary
+                        else
+                            MaterialTheme.colorScheme.secondaryContainer,
+                        contentColor = if (appState.selectedUnitIndex == index)
+                            MaterialTheme.colorScheme.onPrimary
+                        else
+                            MaterialTheme.colorScheme.onSecondaryContainer,
+                        disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    ),
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(data.title)

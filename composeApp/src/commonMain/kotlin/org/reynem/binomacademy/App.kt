@@ -18,7 +18,7 @@ import org.reynem.binomacademy.repositories.TopicRepository
 import org.reynem.binomacademy.file_manager.LocalProfileManager
 import org.reynem.binomacademy.file_manager.ProfileManager
 import org.reynem.binomacademy.screens.AppScreens
-import org.reynem.binomacademy.screens.UnitNavBar
+import org.reynem.binomacademy.widgets.UnitNavBar
 import org.reynem.binomacademy.screens.UnitPage
 import org.reynem.binomacademy.theme.AppTheme
 
