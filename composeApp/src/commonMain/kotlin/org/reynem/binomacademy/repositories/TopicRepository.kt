@@ -1,6 +1,8 @@
-package org.reynem.binomacademy.data
+package org.reynem.binomacademy.repositories
 
 import kotlinx.serialization.json.Json
+import org.reynem.binomacademy.data.Lesson
+import org.reynem.binomacademy.data.Topic
 import java.io.File
 
 class TopicRepository (private val storageFile: File) {

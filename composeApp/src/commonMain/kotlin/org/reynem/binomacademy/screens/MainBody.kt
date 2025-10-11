@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import org.reynem.binomacademy.data.TopicRepository
+import org.reynem.binomacademy.repositories.TopicRepository
 import org.reynem.binomacademy.widgets.TopicCard
 
 @Composable
