@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.reynem.binomacademy.LocalAppState
 import org.reynem.binomacademy.data.Lesson
-import org.reynem.binomacademy.data.TopicRepository
+import org.reynem.binomacademy.repositories.TopicRepository
 import org.reynem.binomacademy.theme.onSecondaryContainerLight
 import org.reynem.binomacademy.theme.secondaryContainerLight
 

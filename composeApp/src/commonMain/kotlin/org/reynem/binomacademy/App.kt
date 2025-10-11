@@ -13,7 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.reynem.binomacademy.data.TopicRepository
+import org.reynem.binomacademy.repositories.TopicRepository
 import org.reynem.binomacademy.file_manager.LocalProfileManager
 import org.reynem.binomacademy.file_manager.ProfileManager
 import org.reynem.binomacademy.screens.AppScreens
@@ -34,16 +34,23 @@ fun App() {
     val topics = TopicRepository(File("topics.json"))
     val appState = remember { AppState() }
     val profileManager = remember { ProfileManager().apply { initialize() }}
+    var darkTheme by remember { mutableStateOf(profileManager.loadUser().darkTheme) }
 
     CompositionLocalProvider(
         LocalAppState provides appState,
         LocalProfileManager provides profileManager
     ) {
         AppTheme (
-            darkTheme = false
+            darkTheme = darkTheme
         ){
             Column(Modifier.fillMaxSize()) {
-                AppHeader()
+                AppHeader(
+                    darkTheme,
+                    onChangeTheme = {
+                        profileManager.updateUser { copy(darkTheme = !darkTheme) }
+                        darkTheme = !darkTheme
+                    }
+                )
                 AnimatedContent(
                     targetState = appState.currentPage,
                     label = "Animated Content",
