@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.reynem.binomacademy.repositories.TopicRepository
 import org.reynem.binomacademy.file_manager.LocalProfileManager
@@ -24,6 +25,8 @@ import org.reynem.binomacademy.theme.AppTheme
 import org.reynem.binomacademy.widgets.AppHeader
 import org.reynem.binomacademy.screens.MainBody
 import org.reynem.binomacademy.screens.ProfilePage
+import org.reynem.binomacademy.viewmodels.ThemeModelFactory
+import org.reynem.binomacademy.viewmodels.ThemeViewModel
 import org.reynem.binomacademy.widgets.SideNavBar
 import java.io.File
 import kotlin.apply
@@ -34,21 +37,20 @@ fun App() {
     val topics = TopicRepository(File("topics.json"))
     val appState = remember { AppState() }
     val profileManager = remember { ProfileManager().apply { initialize() }}
-    var darkTheme by remember { mutableStateOf(profileManager.loadUser().darkTheme) }
+    val themeViewModel: ThemeViewModel = viewModel(factory = ThemeModelFactory(profileManager))
 
     CompositionLocalProvider(
         LocalAppState provides appState,
         LocalProfileManager provides profileManager
     ) {
         AppTheme (
-            darkTheme = darkTheme
+            darkTheme = themeViewModel.darkTheme
         ){
-            Column(Modifier.fillMaxSize()) {
+            Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
                 AppHeader(
-                    darkTheme,
+                    themeViewModel.darkTheme,
                     onChangeTheme = {
-                        profileManager.updateUser { copy(darkTheme = !darkTheme) }
-                        darkTheme = !darkTheme
+                        themeViewModel.toggleTheme()
                     }
                 )
                 AnimatedContent(
@@ -57,8 +59,7 @@ fun App() {
                     transitionSpec = {
                         fadeIn(tween(300)) togetherWith
                                 fadeOut(tween(300))
-                    },
-                    modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+                    }
                 ){ targetPage ->
                     when (targetPage) {
                         AppScreens.MAIN_PAGE -> {
