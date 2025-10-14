@@ -93,7 +93,7 @@ fun ProfilePage() {
             }
 
             Text(
-                text = "You’ve completed ${user.completedUnitsTotal} units",
+                text = "You’ve completed ${user.completedUnitsTotal} assignments",
                 style = MaterialTheme.typography.bodyLarge.copy(
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
                 )

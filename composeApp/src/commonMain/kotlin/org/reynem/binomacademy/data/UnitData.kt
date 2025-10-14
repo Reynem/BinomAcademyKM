@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UnitData(
+    val topicId: Int,
     val id: Int,
     val lessonId: Int,
     val title: String,

@@ -9,6 +9,7 @@
         "title": "Addition",
         "units": [
           {
+            "topicId": 1,
             "id": 1,
             "lessonId": 1,
             "title": "Basics of Addition",
@@ -32,6 +33,7 @@
             "completedAssignments": []
           },
           {
+            "topicId": 1,
             "id": 2,
             "lessonId": 1,
             "title": "Addition with Carry",
@@ -63,6 +65,7 @@
         "title": "Subtraction",
         "units": [
           {
+            "topicId": 1,
             "id": 1,
             "lessonId": 2,
             "title": "Basics of Subtraction",
@@ -93,6 +96,7 @@
         "title": "Multiplication",
         "units": [
           {
+            "topicId": 1,
             "id": 1,
             "lessonId": 3,
             "title": "Multiplication as Repeated Addition",
@@ -130,6 +134,7 @@
         "title": "Mechanics",
         "units": [
           {
+            "topicId": 2,
             "id": 1,
             "lessonId": 1,
             "title": "Newton's First Law",
@@ -154,6 +159,7 @@
         "title": "Optics",
         "units": [
           {
+            "topicId": 2,
             "id": 1,
             "lessonId": 2,
             "title": "Reflection of Light",
@@ -184,6 +190,7 @@
         "title": "Programming beginning",
         "units": [
           {
+            "topicId": 3,
             "id": 1,
             "lessonId": 1,
             "title": "Hello, World!",
@@ -208,6 +215,7 @@
         "title": "Data Structures",
         "units": [
           {
+            "topicId": 3,
             "id": 1,
             "lessonId": 2,
             "title": "Arrays",
@@ -232,6 +240,7 @@
         "title": "Algorithms",
         "units": [
           {
+            "topicId": 3,
             "id": 1,
             "lessonId": 3,
             "title": "Sorting",
@@ -262,6 +271,7 @@
         "title": "Ancient Civilizations",
         "units": [
           {
+            "topicId": 4,
             "id": 1,
             "lessonId": 1,
             "title": "Mesopotamia",
@@ -286,6 +296,7 @@
         "title": "Middle Ages",
         "units": [
           {
+            "topicId": 4,
             "id": 1,
             "lessonId": 2,
             "title": "Feudalism",
@@ -310,6 +321,7 @@
         "title": "Modern History",
         "units": [
           {
+            "topicId": 4,
             "id": 1,
             "lessonId": 3,
             "title": "Industrial Revolution",
