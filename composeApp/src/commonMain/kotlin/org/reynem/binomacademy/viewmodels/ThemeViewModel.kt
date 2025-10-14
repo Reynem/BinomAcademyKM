@@ -13,8 +13,9 @@ class ThemeViewModel(private val profileManager: ProfileManager) : ViewModel() {
     var darkTheme by mutableStateOf(profileManager.loadUser().darkTheme)
 
     fun toggleTheme() {
-        darkTheme = !darkTheme
-        profileManager.updateUser { copy(darkTheme=darkTheme) }
+        val newTheme = !darkTheme
+        darkTheme = newTheme
+        profileManager.updateUser { copy(darkTheme=newTheme) }
     }
 }
 
