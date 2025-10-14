@@ -27,6 +27,7 @@ import org.reynem.binomacademy.screens.MainBody
 import org.reynem.binomacademy.screens.ProfilePage
 import org.reynem.binomacademy.viewmodels.ThemeModelFactory
 import org.reynem.binomacademy.viewmodels.ThemeViewModel
+import org.reynem.binomacademy.viewmodels.TopicIndex
 import org.reynem.binomacademy.widgets.SideNavBar
 import java.io.File
 import kotlin.apply
@@ -38,6 +39,7 @@ fun App() {
     val appState = remember { AppState() }
     val profileManager = remember { ProfileManager().apply { initialize() }}
     val themeViewModel: ThemeViewModel = viewModel(factory = ThemeModelFactory(profileManager))
+    TopicIndex().apply { this.buildIndexes(topics.getAll()) }
 
     CompositionLocalProvider(
         LocalAppState provides appState,
