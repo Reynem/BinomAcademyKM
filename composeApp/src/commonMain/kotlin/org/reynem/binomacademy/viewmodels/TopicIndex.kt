@@ -29,4 +29,40 @@ class TopicIndex {
             }
         }
     }
+
+    fun getParent(id: String): String? = parentById[id]
+
+    fun getChildren(id: String): List<String> = childById[id] ?: emptyList()
+
+    // using loop to get chain of parents
+    fun getParentChain(id: String): List<String> {
+        val chain = mutableListOf<String>()
+        var current = id
+        while (true) {
+            val parent = parentById[current] ?: break
+            chain.add(parent)
+            current = parent
+        }
+        return chain
+    }
+
+    // using loop to get chain of children
+    fun getDescendants(id: String): List<String> {
+        val descendants = mutableListOf<String>()
+        val queue = ArrayDeque<String>()
+        queue.add(id)
+        while (queue.isNotEmpty()) {
+            val current = queue.removeFirst()
+            val children = childById[current] ?: continue
+            descendants.addAll(children)
+            queue.addAll(children)
+        }
+        return descendants
+    }
+
+    fun areAllAssignmentsCompleted(parentId: String, completedAssignments: Set<String>): Boolean {
+        val descendants = getDescendants(parentId)
+        val assignments = descendants.filter { it.startsWith("assignment:") }
+        return assignments.all { it.removePrefix("assignment:") in completedAssignments }
+    }
 }
