@@ -35,14 +35,16 @@ import org.reynem.binomacademy.widgets.MultipleChoiceView
 import org.reynem.binomacademy.widgets.NumberInputView
 import org.reynem.binomacademy.widgets.TextInputView
 import org.reynem.binomacademy.widgets.TrueFalseView
+import org.reynem.binomacademy.viewmodels.TopicIndex
 
 @Composable
 fun UnitPage(
     lesson: Lesson,
     index: Int,
+    topicIndex: TopicIndex,
     assignmentViewModel: AssignmentViewModel = viewModel(
         key = lesson.id.toString(),
-        factory = AssignmentModelFactory(LocalProfileManager.current)
+        factory = AssignmentModelFactory(LocalProfileManager.current, topicIndex)
     )
 ) {
     val unit = lesson.units[index]
