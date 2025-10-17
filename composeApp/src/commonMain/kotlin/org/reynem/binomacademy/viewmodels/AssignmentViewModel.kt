@@ -11,7 +11,10 @@ import org.reynem.binomacademy.utils.numberFormat
 import kotlin.reflect.KClass
 
 
-class AssignmentViewModel(private val profileManager: ProfileManager) : ViewModel() {
+class AssignmentViewModel(
+    private val profileManager: ProfileManager,
+    private val topicIndex: TopicIndex
+    ) : ViewModel() {
     private val _userAnswers = mutableStateOf<Map<String, Any?>>(emptyMap())
     val userAnswers = _userAnswers
 
@@ -24,8 +27,16 @@ class AssignmentViewModel(private val profileManager: ProfileManager) : ViewMode
         }
     }
 
+    fun isParentCompleted(parentId: String) : Boolean{
+        return topicIndex.areAllAssignmentsCompleted(parentId, _completedAssignments.value)
+    }
+
     fun checkAssignments(unitAssignments: List<Assignment>) {
         val newlyCompleted = mutableSetOf<String>()
+
+        if (unitAssignments.isEmpty()) {
+            return
+        }
 
         for (assignment in unitAssignments) {
             val isCorrect = when (assignment) {
@@ -54,11 +65,11 @@ class AssignmentViewModel(private val profileManager: ProfileManager) : ViewMode
                 }
             }
 
-            if (isCorrect && !profileManager.user.value.completedUnits.contains(assignment.id)) {
+            if (isCorrect && !profileManager.user.value.completedAssignments.contains(assignment.id)) {
                 newlyCompleted.add(assignment.id)
                 profileManager.updateUser { copy(
-                    completedUnitsTotal = this.completedUnitsTotal + 1,
-                    completedUnits = this.completedUnits + newlyCompleted
+                    completedAssignmentsTotal = this.completedAssignmentsTotal + 1,
+                    completedAssignments = this.completedAssignments + newlyCompleted
                 ) }
             } else if (isCorrect && !_completedAssignments.value.contains(assignment.id)){
                 newlyCompleted.add(assignment.id)
@@ -66,6 +77,16 @@ class AssignmentViewModel(private val profileManager: ProfileManager) : ViewMode
         }
 
         _completedAssignments.value += newlyCompleted
+
+        val firstCompleted = newlyCompleted.firstOrNull() ?: return
+
+        val parent = topicIndex.getParent("assignment:${firstCompleted}") ?: return
+        if (isParentCompleted(parent) && !profileManager.user.value.completedUnits.contains(parent)) {
+            profileManager.updateUser { copy(
+                completedUnits = this.completedUnits + parent,
+                completedUnitsTotal = this.completedUnitsTotal + 1
+            ) }
+        }
     }
 
 //    fun clearAnswers() {
@@ -73,11 +94,14 @@ class AssignmentViewModel(private val profileManager: ProfileManager) : ViewMode
 //    }
 }
 
-class AssignmentModelFactory(private val profileManager: ProfileManager) :
+class AssignmentModelFactory(
+    private val profileManager: ProfileManager,
+    private val topicIndex: TopicIndex
+) :
     ViewModelProvider.NewInstanceFactory()
 
     {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T =
-            AssignmentViewModel(profileManager) as T
+            AssignmentViewModel(profileManager = profileManager, topicIndex = topicIndex) as T
     }

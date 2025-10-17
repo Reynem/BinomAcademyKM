@@ -11,12 +11,12 @@ class TopicIndex {
             val topicKey = "topic:${topic.id}"
 
             topic.lessons.forEach { lesson ->
-                val lessonKey = "lesson:${lesson.id}"
+                val lessonKey = "lesson:${lesson.id}_${topic.id}"
                 parentById[lessonKey] = topicKey
                 childById.getOrPut(topicKey) { mutableListOf() }.add(lessonKey)
 
                 lesson.units.forEach { unit ->
-                    val unitKey = "unit:${unit.id}"
+                    val unitKey = "unit:${unit.id}_${lesson.id}_${topic.id}"
                     parentById[unitKey] = lessonKey
                     childById.getOrPut(lessonKey) { mutableListOf() }.add(unitKey)
 

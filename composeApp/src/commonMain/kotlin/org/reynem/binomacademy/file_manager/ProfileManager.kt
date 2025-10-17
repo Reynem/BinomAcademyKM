@@ -19,7 +19,9 @@ class ProfileManager {
             val user = User(
                 name = "Hello",
                 completedUnitsTotal = 0,
+                completedAssignmentsTotal = 0,
                 completedUnits = setOf(),
+                completedAssignments = setOf(),
                 achievements = listOf()
             )
             val userJson = json.encodeToString(user)

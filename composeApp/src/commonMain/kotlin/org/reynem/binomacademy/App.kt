@@ -39,7 +39,7 @@ fun App() {
     val appState = remember { AppState() }
     val profileManager = remember { ProfileManager().apply { initialize() }}
     val themeViewModel: ThemeViewModel = viewModel(factory = ThemeModelFactory(profileManager))
-    TopicIndex().apply { this.buildIndexes(topics.getAll()) }
+    val topicIndex = TopicIndex().apply { this.buildIndexes(topics.getAll()) }
 
     CompositionLocalProvider(
         LocalAppState provides appState,
@@ -89,7 +89,7 @@ fun App() {
                                         lesson,
                                         onSelect = { appState.selectUnit(it) }
                                     )
-                                    UnitPage(lesson, appState.selectedUnitIndex)
+                                    UnitPage(lesson, topicIndex = topicIndex, index = appState.selectedUnitIndex)
                                 }
                             }
                         }
