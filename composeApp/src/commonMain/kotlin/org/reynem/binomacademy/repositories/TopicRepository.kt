@@ -1,5 +1,6 @@
 package org.reynem.binomacademy.repositories
 
+import androidx.compose.ui.util.fastForEach
 import kotlinx.serialization.json.Json
 import org.reynem.binomacademy.data.Lesson
 import org.reynem.binomacademy.data.Topic
@@ -33,6 +34,17 @@ class TopicRepository (private val storageFile: File) {
 
     fun getAll(): List<Topic> { return topics }
     fun getById(id: Int): Topic? { return topics.find { topic -> topic.id == id}}
+    fun getLength(): Int {
+        var length = 0
+        topics.fastForEach {
+            topic -> topic.lessons.fastForEach {
+                lesson -> lesson.units.fastForEach { unit ->
+                    length += unit.assignments.size
+                }
+            }
+        }
+        return length
+    }
 
     fun add(topic: Topic) {
         if (topics.any {it.id == topic.id}) {

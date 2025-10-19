@@ -100,6 +100,10 @@ class AssignmentViewModel(
         return isCompleted
     }
 
+    fun showCurrentProgress(wholeLength: Int) : Float {
+        return profileManager.user.value.completedAssignmentsTotal.toFloat() / wholeLength.toFloat()
+    }
+
 //    fun clearAnswers() {
 //        _userAnswers.value = emptyMap()
 //    }

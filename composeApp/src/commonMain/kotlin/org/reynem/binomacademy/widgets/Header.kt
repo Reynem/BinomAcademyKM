@@ -26,13 +26,16 @@ import binomacademy.composeapp.generated.resources.dark_mode
 import binomacademy.composeapp.generated.resources.light_mode
 import org.jetbrains.compose.resources.painterResource
 import org.reynem.binomacademy.file_manager.LocalProfileManager
+import org.reynem.binomacademy.viewmodels.LocalAssignmentViewModel
 
 @Composable
 fun AppHeader(
     darkTheme: Boolean,
+    totalAssignments: Int,
     onChangeTheme: () -> Unit
 ){
     val profileManager = LocalProfileManager.current
+    val assignmentViewModel = LocalAssignmentViewModel.current
     var isToggled by rememberSaveable { mutableStateOf(darkTheme) }
     val profileName = profileManager.user.value.name
     Column {
@@ -59,7 +62,7 @@ fun AppHeader(
 
                 LinearProgressIndicator(
                     modifier = Modifier.padding(top = 8.dp),
-                    progress = { 0.1f }
+                    progress = { assignmentViewModel.showCurrentProgress(totalAssignments) }
                 )
             }
         }

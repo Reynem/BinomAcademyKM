@@ -45,6 +45,8 @@ fun App() {
     val topicIndex = TopicIndex().apply { this.buildIndexes(topics.getAll()) }
     val assignmentViewModel: AssignmentViewModel = viewModel(factory = AssignmentModelFactory(profileManager, topicIndex))
 
+    val totalAssignments = topics.getLength()
+
     CompositionLocalProvider(
         LocalAppState provides appState,
         LocalProfileManager provides profileManager,
@@ -56,6 +58,7 @@ fun App() {
             Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
                 AppHeader(
                     themeViewModel.darkTheme,
+                    totalAssignments,
                     onChangeTheme = {
                         themeViewModel.toggleTheme()
                     }
