@@ -1,5 +1,6 @@
 package org.reynem.binomacademy.viewmodels
 
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,6 +11,10 @@ import org.reynem.binomacademy.utils.normalizeNumberInput
 import org.reynem.binomacademy.utils.numberFormat
 import kotlin.reflect.KClass
 
+
+val LocalAssignmentViewModel = compositionLocalOf<AssignmentViewModel> {
+    error("LocalAssignmentViewModel not provided")
+}
 
 class AssignmentViewModel(
     private val profileManager: ProfileManager,
@@ -87,6 +92,12 @@ class AssignmentViewModel(
                 completedUnitsTotal = this.completedUnitsTotal + 1
             ) }
         }
+    }
+
+    fun checkLesson(topicId: String, lessonId: String) : Boolean {
+        val children = topicIndex.getChildren("lesson:${lessonId}_${topicId}")
+        val isCompleted = children.all { topicIndex.areAllAssignmentsCompleted(it, profileManager.user.value.completedAssignments) }
+        return isCompleted
     }
 
 //    fun clearAnswers() {

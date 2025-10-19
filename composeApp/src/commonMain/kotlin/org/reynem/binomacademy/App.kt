@@ -25,6 +25,9 @@ import org.reynem.binomacademy.theme.AppTheme
 import org.reynem.binomacademy.widgets.AppHeader
 import org.reynem.binomacademy.screens.MainBody
 import org.reynem.binomacademy.screens.ProfilePage
+import org.reynem.binomacademy.viewmodels.AssignmentModelFactory
+import org.reynem.binomacademy.viewmodels.AssignmentViewModel
+import org.reynem.binomacademy.viewmodels.LocalAssignmentViewModel
 import org.reynem.binomacademy.viewmodels.ThemeModelFactory
 import org.reynem.binomacademy.viewmodels.ThemeViewModel
 import org.reynem.binomacademy.viewmodels.TopicIndex
@@ -40,10 +43,12 @@ fun App() {
     val profileManager = remember { ProfileManager().apply { initialize() }}
     val themeViewModel: ThemeViewModel = viewModel(factory = ThemeModelFactory(profileManager))
     val topicIndex = TopicIndex().apply { this.buildIndexes(topics.getAll()) }
+    val assignmentViewModel: AssignmentViewModel = viewModel(factory = AssignmentModelFactory(profileManager, topicIndex))
 
     CompositionLocalProvider(
         LocalAppState provides appState,
-        LocalProfileManager provides profileManager
+        LocalProfileManager provides profileManager,
+        LocalAssignmentViewModel provides assignmentViewModel
     ) {
         AppTheme (
             darkTheme = themeViewModel.darkTheme
