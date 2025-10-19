@@ -16,14 +16,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.reynem.binomacademy.LocalAppState
 import org.reynem.binomacademy.data.Lesson
+import org.reynem.binomacademy.viewmodels.LocalAssignmentViewModel
 
 @Composable
 fun LessonItem(lesson: Lesson) {
     val appState = LocalAppState.current
+    val assignmentViewModel = LocalAssignmentViewModel.current
     Card (
         modifier = Modifier.fillMaxWidth().padding(8.dp),
         colors = CardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            containerColor =
+                if (assignmentViewModel.checkLesson(
+                    lesson.topicId.toString(),
+                    lesson.id.toString())
+                    )   MaterialTheme.colorScheme.primaryContainer
+                else MaterialTheme.colorScheme.surfaceContainer
+            ,
             contentColor = MaterialTheme.colorScheme.onSurface,
             disabledContainerColor = MaterialTheme.colorScheme.surface,
             disabledContentColor = MaterialTheme.colorScheme.onSurface
