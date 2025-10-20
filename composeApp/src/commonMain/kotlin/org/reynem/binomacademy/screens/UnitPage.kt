@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -52,79 +53,101 @@ fun UnitPage(
     val userAnswers by assignmentViewModel.userAnswers
     val completedAnswers by assignmentViewModel.completedAssignments
 
-    Card(
+    Box(
         modifier = Modifier
+            .fillMaxSize()
             .padding(12.dp)
-            .verticalScroll(rememberScrollState())
-            .fillMaxSize(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background
-        ),
     ) {
-        Text(
-            text = unit.title,
-            style = MaterialTheme.typography.headlineLarge.copy(
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
-            ),
-            textAlign = TextAlign.Center,
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        )
-
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-                .background(backgroundDark)
-        )
-
-        // STORIES
-        SectionHeader(icon = Res.drawable.book_story, label = "Stories")
-        if (unit.stories.isEmpty()) {
-            EmptyCard("No stories yet")
-        } else {
-            unit.stories.forEach { story ->
-                ItemCard(content = story)
-            }
-        }
-
-        // ASSIGNMENTS
-        SectionHeader(icon = Res.drawable.book_assignment, label = "Assignments")
-        if (unit.assignments.isEmpty()) {
-            EmptyCard("No assignments yet")
-        } else {
-            unit.assignments.forEach { assignment ->
-                val isCompleted = assignment.id in completedAnswers
-                val currentAnswer = userAnswers[assignment.id]
-
-                AssignmentCard(
-                    assignment = assignment,
-                    isCompleted = isCompleted,
-                    currentAnswer = currentAnswer,
-                    onAnswerChanged = { answer ->
-                        assignmentViewModel.updateAnswer(assignment.id, answer)
-                    }
-                )
-            }
-        }
-
-        Button(
-            onClick = {
-                assignmentViewModel.checkAssignments(unit.assignments) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
+                .padding(bottom = 80.dp)
         ) {
-            Text("Check answers")
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.background
+                ),
+            ) {
+                Text(
+                    text = unit.title,
+                    style = MaterialTheme.typography.headlineLarge.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    ),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(backgroundDark)
+                )
+
+                SectionHeader(icon = Res.drawable.book_story, label = "Stories")
+                if (unit.stories.isEmpty()) {
+                    EmptyCard("No stories yet")
+                } else {
+                    unit.stories.forEach { story ->
+                        ItemCard(content = story)
+                    }
+                }
+
+                SectionHeader(icon = Res.drawable.book_assignment, label = "Assignments")
+                if (unit.assignments.isEmpty()) {
+                    EmptyCard("No assignments yet")
+                } else {
+                    unit.assignments.forEach { assignment ->
+                        val isCompleted = assignment.id in completedAnswers
+                        val currentAnswer = userAnswers[assignment.id]
+
+                        AssignmentCard(
+                            assignment = assignment,
+                            isCompleted = isCompleted,
+                            currentAnswer = currentAnswer,
+                            onAnswerChanged = { answer ->
+                                assignmentViewModel.updateAnswer(assignment.id, answer)
+                            }
+                        )
+                    }
+                }
+
+                SectionHeader(icon = Res.drawable.book_tip, label = "Tips")
+                EmptyCard("Coming soon...")
+            }
         }
 
-        // TIPS
-        SectionHeader(icon = Res.drawable.book_tip, label = "Tips")
-        EmptyCard("Coming soon...")
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surface)
+                .padding(12.dp)
+        ) {
+            Button(
+                onClick = { assignmentViewModel.checkAssignments(unit.assignments) },
+                modifier = Modifier.fillMaxWidth(0.3f)
+            ) {
+                Text("Check answers")
+            }
+
+            Button(
+                shape = ButtonDefaults.elevatedShape,
+                onClick = { assignmentViewModel.clearNewlyCompleted() },
+                modifier = Modifier.fillMaxWidth(0.4f)
+            ) {
+                Text("Restart")
+            }
+        }
     }
 }
+
 
 @Composable
 private fun SectionHeader(icon: DrawableResource, label: String) {
@@ -177,7 +200,7 @@ private fun AssignmentCard(
             .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isCompleted) MaterialTheme.colorScheme.primaryContainer
+            containerColor = if (isCompleted) MaterialTheme.colorScheme.inversePrimary
             else MaterialTheme.colorScheme.surface
         )
     ) {

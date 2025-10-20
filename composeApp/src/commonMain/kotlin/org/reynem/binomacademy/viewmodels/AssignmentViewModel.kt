@@ -107,6 +107,10 @@ class AssignmentViewModel(
 //    fun clearAnswers() {
 //        _userAnswers.value = emptyMap()
 //    }
+
+    fun clearNewlyCompleted() {
+        _completedAssignments.value = emptySet()
+    }
 }
 
 class AssignmentModelFactory(
