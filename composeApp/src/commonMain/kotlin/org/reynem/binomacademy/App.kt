@@ -28,6 +28,7 @@ import org.reynem.binomacademy.screens.ProfilePage
 import org.reynem.binomacademy.viewmodels.AssignmentModelFactory
 import org.reynem.binomacademy.viewmodels.AssignmentViewModel
 import org.reynem.binomacademy.viewmodels.LocalAssignmentViewModel
+import org.reynem.binomacademy.viewmodels.LocalThemeViewModel
 import org.reynem.binomacademy.viewmodels.ThemeModelFactory
 import org.reynem.binomacademy.viewmodels.ThemeViewModel
 import org.reynem.binomacademy.viewmodels.TopicIndex
@@ -50,7 +51,8 @@ fun App() {
     CompositionLocalProvider(
         LocalAppState provides appState,
         LocalProfileManager provides profileManager,
-        LocalAssignmentViewModel provides assignmentViewModel
+        LocalAssignmentViewModel provides assignmentViewModel,
+        LocalThemeViewModel provides themeViewModel
     ) {
         AppTheme (
             darkTheme = themeViewModel.darkTheme
