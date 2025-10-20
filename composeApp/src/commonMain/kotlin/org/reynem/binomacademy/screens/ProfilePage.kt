@@ -28,15 +28,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.dokar.sonner.ToastType
+import com.dokar.sonner.Toaster
+import com.dokar.sonner.rememberToasterState
 import io.github.vinceglb.filekit.dialogs.FileKitType
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.path
 import org.reynem.binomacademy.file_manager.LocalProfileManager
+import org.reynem.binomacademy.viewmodels.LocalThemeViewModel
 
 @Composable
 fun ProfilePage() {
     val profileManager = LocalProfileManager.current
     val user = profileManager.user.value
+    val toast = rememberToasterState()
+    val darkTheme = LocalThemeViewModel.current.darkTheme
     val pathToAvatar = remember { mutableStateOf(user.avatarPath) }
     var tempName by remember { mutableStateOf(user.name) }
 
@@ -109,7 +115,10 @@ fun ProfilePage() {
             )
 
             Button(
-                onClick = { profileManager.updateUser { copy(name = tempName) } },
+                onClick = {
+                    profileManager.updateUser { copy(name = tempName) }
+                    toast.show("User is updated!", type = ToastType.Success)
+                          },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
@@ -139,6 +148,11 @@ fun ProfilePage() {
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+            )
+
+            Toaster(
+                darkTheme = darkTheme,
+                state = toast
             )
         }
     }

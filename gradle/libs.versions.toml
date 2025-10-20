@@ -17,6 +17,7 @@ kotlinx-coroutines = "1.10.2"
 kotlinx-serialization-json = "1.9.0"
 coil3 = "3.3.0"
 filekit = "0.12.0"
+compose-sooner="0.3.8"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -36,6 +37,7 @@ coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version
 filekit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "filekit" }
 filekit-dialogs-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
 filekit-dialogs = { module = "io.github.vinceglb:filekit-dialogs", version.ref = "filekit" }
+compose-sooner = { module = "io.github.dokar3:sonner", version.ref = "compose-sooner"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
