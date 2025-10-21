@@ -1,6 +1,7 @@
 package org.reynem.binomacademy.repositories
 
 import androidx.compose.ui.util.fastForEach
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import org.reynem.binomacademy.data.Lesson
 import org.reynem.binomacademy.data.Topic
@@ -17,7 +18,11 @@ class TopicRepository (private val storageFile: File) {
         if (storageFile.exists()) {
             val content = storageFile.readText()
             if (content.isNotBlank()) {
-                topics = json.decodeFromString(content)
+                try {
+                    topics = json.decodeFromString(content)
+                } catch (e: SerializationException) {
+                    throw Throwable("ERROR IN TopicRepository: $e")
+                }
             }
         } else {
             this.add(
