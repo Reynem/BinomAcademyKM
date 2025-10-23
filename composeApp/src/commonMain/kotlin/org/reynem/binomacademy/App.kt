@@ -99,7 +99,11 @@ fun App() {
                                         lesson,
                                         onSelect = { appState.selectUnit(it) }
                                     )
-                                    UnitPage(lesson, topicIndex = topicIndex, index = appState.selectedUnitIndex)
+                                    UnitPage(
+                                        lesson,
+                                        darkTheme = themeViewModel.darkTheme,
+                                        topicIndex = topicIndex,
+                                        index = appState.selectedUnitIndex)
                                 }
                             }
                         }

@@ -152,6 +152,7 @@ fun ProfilePage() {
 
             Toaster(
                 darkTheme = darkTheme,
+                richColors = true,
                 state = toast
             )
         }

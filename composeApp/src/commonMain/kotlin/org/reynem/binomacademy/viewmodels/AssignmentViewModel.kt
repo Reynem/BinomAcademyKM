@@ -36,11 +36,11 @@ class AssignmentViewModel(
         return topicIndex.areAllAssignmentsCompleted(parentId, _completedAssignments.value)
     }
 
-    fun checkAssignments(unitAssignments: List<Assignment>) {
+    fun checkAssignments(unitAssignments: List<Assignment>) : Boolean{
         val newlyCompleted = mutableSetOf<String>()
 
         if (unitAssignments.isEmpty()) {
-            return
+            return false
         }
 
         for (assignment in unitAssignments) {
@@ -83,15 +83,19 @@ class AssignmentViewModel(
 
         _completedAssignments.value += newlyCompleted
 
-        val firstCompleted = newlyCompleted.firstOrNull() ?: return
+        val firstCompleted = newlyCompleted.firstOrNull() ?: return false
 
-        val parent = topicIndex.getParent("assignment:${firstCompleted}") ?: return
+        val parent = topicIndex.getParent("assignment:${firstCompleted}") ?: return false
         if (isParentCompleted(parent) && !profileManager.user.value.completedUnits.contains(parent)) {
             profileManager.updateUser { copy(
                 completedUnits = this.completedUnits + parent,
                 completedUnitsTotal = this.completedUnitsTotal + 1
             ) }
         }
+        if (isParentCompleted(parent)) {
+            return true
+        }
+        return false
     }
 
     fun checkLesson(topicId: String, lessonId: String) : Boolean {

@@ -24,6 +24,9 @@ import binomacademy.composeapp.generated.resources.Res
 import binomacademy.composeapp.generated.resources.book_assignment
 import binomacademy.composeapp.generated.resources.book_story
 import binomacademy.composeapp.generated.resources.book_tip
+import com.dokar.sonner.ToastType
+import com.dokar.sonner.Toaster
+import com.dokar.sonner.rememberToasterState
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.reynem.binomacademy.data.Assignment
@@ -42,6 +45,7 @@ import org.reynem.binomacademy.viewmodels.TopicIndex
 fun UnitPage(
     lesson: Lesson,
     index: Int,
+    darkTheme: Boolean,
     topicIndex: TopicIndex,
     assignmentViewModel: AssignmentViewModel = viewModel(
         key = lesson.id.toString(),
@@ -49,6 +53,7 @@ fun UnitPage(
     )
 ) {
     val unit = lesson.units[index]
+    val toast = rememberToasterState()
 
     val userAnswers by assignmentViewModel.userAnswers
     val completedAnswers by assignmentViewModel.completedAssignments
@@ -131,7 +136,10 @@ fun UnitPage(
                 .padding(12.dp)
         ) {
             Button(
-                onClick = { assignmentViewModel.checkAssignments(unit.assignments) },
+                onClick = {
+                    val isCorrect = assignmentViewModel.checkAssignments(unit.assignments);
+                    if (isCorrect) toast.show("You successfully solved the tasks!", type = ToastType.Success)
+                          },
                 modifier = Modifier.fillMaxWidth(0.3f)
             ) {
                 Text("Check answers")
@@ -145,6 +153,11 @@ fun UnitPage(
                 Text("Restart")
             }
         }
+        Toaster(
+            darkTheme = darkTheme,
+            richColors = true,
+            state = toast
+        )
     }
 }
 
