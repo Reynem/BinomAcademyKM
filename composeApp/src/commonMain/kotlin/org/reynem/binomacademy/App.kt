@@ -102,7 +102,6 @@ fun App() {
                                     UnitPage(
                                         lesson,
                                         darkTheme = themeViewModel.darkTheme,
-                                        topicIndex = topicIndex,
                                         index = appState.selectedUnitIndex)
                                 }
                             }

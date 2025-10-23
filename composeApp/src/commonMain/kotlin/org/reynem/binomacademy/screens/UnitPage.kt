@@ -19,7 +19,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import binomacademy.composeapp.generated.resources.Res
 import binomacademy.composeapp.generated.resources.book_assignment
 import binomacademy.composeapp.generated.resources.book_story
@@ -31,29 +30,22 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.reynem.binomacademy.data.Assignment
 import org.reynem.binomacademy.data.Lesson
-import org.reynem.binomacademy.file_manager.LocalProfileManager
 import org.reynem.binomacademy.theme.backgroundDark
-import org.reynem.binomacademy.viewmodels.AssignmentModelFactory
-import org.reynem.binomacademy.viewmodels.AssignmentViewModel
+import org.reynem.binomacademy.viewmodels.LocalAssignmentViewModel
 import org.reynem.binomacademy.widgets.MultipleChoiceView
 import org.reynem.binomacademy.widgets.NumberInputView
 import org.reynem.binomacademy.widgets.TextInputView
 import org.reynem.binomacademy.widgets.TrueFalseView
-import org.reynem.binomacademy.viewmodels.TopicIndex
 
 @Composable
 fun UnitPage(
     lesson: Lesson,
     index: Int,
     darkTheme: Boolean,
-    topicIndex: TopicIndex,
-    assignmentViewModel: AssignmentViewModel = viewModel(
-        key = lesson.id.toString(),
-        factory = AssignmentModelFactory(LocalProfileManager.current, topicIndex)
-    )
 ) {
     val unit = lesson.units[index]
     val toast = rememberToasterState()
+    val assignmentViewModel = LocalAssignmentViewModel.current
 
     val userAnswers by assignmentViewModel.userAnswers
     val completedAnswers by assignmentViewModel.completedAssignments
@@ -137,8 +129,9 @@ fun UnitPage(
         ) {
             Button(
                 onClick = {
-                    val isCorrect = assignmentViewModel.checkAssignments(unit.assignments);
+                    val isCorrect = assignmentViewModel.checkAssignments(unit.assignments)
                     if (isCorrect) toast.show("You successfully solved the tasks!", type = ToastType.Success)
+
                           },
                 modifier = Modifier.fillMaxWidth(0.3f)
             ) {
@@ -214,6 +207,7 @@ private fun AssignmentCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (isCompleted) MaterialTheme.colorScheme.inversePrimary
+            else if (LocalAssignmentViewModel.current.getAssignmentTriesNumber(assignment.id) > 1) MaterialTheme.colorScheme.errorContainer
             else MaterialTheme.colorScheme.surface
         )
     ) {

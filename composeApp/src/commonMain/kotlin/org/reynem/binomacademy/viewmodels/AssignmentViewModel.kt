@@ -1,6 +1,7 @@
 package org.reynem.binomacademy.viewmodels
 
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +26,8 @@ class AssignmentViewModel(
 
     private val _completedAssignments = mutableStateOf<Set<String>>(emptySet())
     val completedAssignments = _completedAssignments
+
+    val numberOfTriesOnAssignment = mutableStateMapOf<String, Int>()
 
     fun updateAnswer(assignmentId: String, answer: Any?) {
         _userAnswers.value = _userAnswers.value.toMutableMap().apply {
@@ -70,6 +73,8 @@ class AssignmentViewModel(
                 }
             }
 
+            updateAssignmentTriesNumber(assignment.id)
+
             if (isCorrect && !profileManager.user.value.completedAssignments.contains(assignment.id)) {
                 newlyCompleted.add(assignment.id)
                 profileManager.updateUser { copy(
@@ -114,6 +119,17 @@ class AssignmentViewModel(
 
     fun clearNewlyCompleted() {
         _completedAssignments.value = emptySet()
+    }
+
+    fun getAssignmentTriesNumber(assignmentId: String) : Int {
+        return numberOfTriesOnAssignment.getOrDefault(assignmentId, 1)
+    }
+
+    fun updateAssignmentTriesNumber(assignmentId: String) : Int {
+        var updatedNumber = numberOfTriesOnAssignment[assignmentId] ?: 1
+        updatedNumber += 1
+        numberOfTriesOnAssignment[assignmentId] = updatedNumber
+        return updatedNumber
     }
 }
 
