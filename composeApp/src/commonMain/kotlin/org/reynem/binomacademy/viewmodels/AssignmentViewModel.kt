@@ -110,7 +110,11 @@ class AssignmentViewModel(
     }
 
     fun showCurrentProgress(wholeLength: Int) : Float {
-        return profileManager.user.value.completedAssignmentsTotal.toFloat() / wholeLength.toFloat()
+        val currentProgress = (profileManager.user.value.completedAssignmentsTotal.toFloat() / wholeLength.toFloat())
+        if (currentProgress.isNaN()){
+            return 0f
+        }
+        return currentProgress
     }
 
 //    fun clearAnswers() {

@@ -35,11 +35,11 @@ class ProfileManager {
             if (content != null) {
                 json.decodeFromString(content)
             } else {
-                User(name = "Anonymous", completedUnitsTotal = 0)
+                User(name = "Anonymous", completedUnitsTotal = 0, completedAssignmentsTotal = 0)
             }
         } catch (e: Exception) {
             println("Error while reading a Json: $e")
-            User(name = "Anonymous", completedUnitsTotal = 0)
+            User(name = "Anonymous", completedUnitsTotal = 0, completedAssignmentsTotal = 0)
         }
     }
 

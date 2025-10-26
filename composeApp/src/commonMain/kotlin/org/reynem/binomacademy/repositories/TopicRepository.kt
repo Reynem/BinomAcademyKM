@@ -25,6 +25,7 @@ class TopicRepository (private val storageFile: File) {
                 }
             }
         } else {
+            println("TopicRepository can not find storageFile")
             this.add(
                 Topic(
                     id = 1, title = "Mathematics", lessons = listOf(

@@ -62,7 +62,7 @@ fun AppHeader(
 
                 LinearProgressIndicator(
                     modifier = Modifier.padding(top = 8.dp),
-                    progress = { assignmentViewModel.showCurrentProgress(totalAssignments) }
+                    progress = { assignmentViewModel.showCurrentProgress(totalAssignments)}
                 )
             }
         }
